@@ -23,3 +23,24 @@
 * As a developer, I want to maximize user engagement through evolving features as the games progresses
 
 * As a developer, I want the game to be initially accessible so the user doesn't feel intimidated when beginning play
+
+>MVP
+* 1 main character = 3 sprites
+* Platform Bottom = 1 sprite
+* Jumping Platform = 1 Sprite
+
+* Page static
+* Jump dependant on time spacebar is held down
+* Player to top platform === Win!
+* Local Storage for highscores
+* Score = Time it takes to get to top platform
+* After game over ask name for highscore board
+
+> Stretch Goals
+* Page scrolls vertically with progression
+
+* Different Difficulty levels
+
+* Platforms get skinnier and smaller to increase difficulty
+
+* Super power jump with flames on correct timing.
