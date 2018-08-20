@@ -2,6 +2,16 @@
 
 console.log('player link');
 
+//Push keyCode into map. Keydown will make it truthy. Keyup will make it falsey.
+var keyMap = {};
+
+document.onkeydown = document.onkeyup = function(e){
+  e = e || event;
+  keyMap[e.keyCode] = e.type === 'keydown';
+  console.log(keyMap);
+};
+
+//Grab player element.
 var player = document.getElementsByClassName('player')[0];
 // var play = new GameObject()
 console.log(player);
@@ -39,11 +49,3 @@ document.addEventListener('keydown', function(event){
     console.log('r n space');
   }
 });
-
-var keyMap = {};
-
-document.onkeydown = document.onkeyup = function(e){
-  e = e || event;
-  keyMap[e.keyCode] = e.type === 'keydown';
-  console.log(keyMap);
-};
