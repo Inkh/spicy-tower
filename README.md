@@ -2,13 +2,11 @@
 
 > User Stories
 
-* As a developer, I want to create a game so that a potential employer can be impressed and hire us
+* As a developer, I want to create a game so that a potential employer can be impressed and hire us.
 
-* As a developer, I want to create a game that looks very cool so that whoever plays the game will want to play
+* As a gamer, I want to play a game that is responsive so that I will have a good gaming experience.
 
-* As a gamer, I want to play a game that is responsive so that I will have a good gaming experience
-
-* As a developer, I want to create a game where the end goal will be to reach the top of the map and the player wins so that their is a goal for the game
+* As a user, I want to play a game where the end goal will be to reach the top of the map and the player wins so that their is a goal for the game.
 
 * As a developer, I want to create a game that is simple yet addicting to play in order to form a user base of at least 4 people.
 
@@ -20,13 +18,13 @@
 
 * As an employer, I want to see good, descriptive commit messages in order to assess how these developers will contribute when working on my teams' repositories.
 
-* As a developer, I want to maximize user engagement through evolving features as the games progresses
+* As a user, I want to be see evolving features as the game progresses in order to be consistently engaged.
 
-* As a developer, I want the game to be initially accessible so the user doesn't feel intimidated when beginning play
+* As a user, I want the game to be initially accessible so the I don't feel intimidated when beginning play.
 
-* As a gamer, I want to see the highscore page so that I can compare my score with other players
+* As a gamer, I want to see the highscore page so that I can compare my score with other players.
 
-* As a gamer, I want to have my highscores saved so that when I come back to the page I can see my previous score
+* As a gamer, I want to have my highscores saved so that when I come back to the page I can see my previous score.
 
 > MVP
 * 1 main character = 3 sprites
@@ -40,7 +38,10 @@
 * After game over ask name for highscore board
 * Player can press any key to start the game
 * Spacebar to jump
-* Directional arrows determine the direction of the character will jump
+* Left/Right arrows for navigation
+* Spacebar + arrow will make sprite jump in direction
+* Spacebar jump is constant and triggered on keydown, but jump height is dependent on velocity
+* Character can navigate left and right in air, but at lesser % of full velocity on ground
 
 > Stretch Goals
 * Page scrolls vertically with progression
