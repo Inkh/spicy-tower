@@ -24,17 +24,23 @@
 
 * As a developer, I want the game to be initially accessible so the user doesn't feel intimidated when beginning play
 
->MVP
+* As a gamer, I want to see the highscore page so that I can compare my score with other players
+
+* As a gamer, I want to have my highscores saved so that when I come back to the page I can see my previous score
+
+> MVP
 * 1 main character = 3 sprites
 * Platform Bottom = 1 sprite
 * Jumping Platform = 1 Sprite
-
 * Page static
 * Jump dependant on time spacebar is held down
 * Player to top platform === Win!
 * Local Storage for highscores
 * Score = Time it takes to get to top platform
 * After game over ask name for highscore board
+* Player can press any key to start the game
+* Spacebar to jump
+* Directional arrows determine the direction of the character will jump
 
 > Stretch Goals
 * Page scrolls vertically with progression
@@ -44,3 +50,26 @@
 * Platforms get skinnier and smaller to increase difficulty
 
 * Super power jump with flames on correct timing.
+
+> Conflict Plan
+* What will your group do when it encounters conflict?
+  * If we have any conflicts we will communicate it with each other right away to make sure everyone is in agreement
+* How will you raise concerns to members who are not adequately contributing?
+  * tasks will be divided amongst us daily. If a member is not adequately contributing we can try to redistribute workflow. Will work with that member to seek the cause and determine what is the best solution together.
+* What is your process to resolve conflicts?
+  * Open communication and honesty. Constructive feedback.
+* How and when will you escalate the conflict if your attempts are unsuccessful?
+  * If after 3 unsuccessful attempts, will escalate to Michelle
+
+>Communication Plan
+* How will you communicate after hours and on the weekend?
+  * Slack chatroom
+* How will we handle our workload? 
+  * Coding will occur during class time, it is not expected for a member to work on any features at home, however, if a member chooses to work on something at home they are welcome to. Anything we do we will communicate with each other.  
+* What is your strategy for ensuring everyone's voices are heard?
+  * listen to everyone's oppinion, setting the context and shared goals upfront to the group. Think about different learning/processing styles and bake that into the process design. Ask for everyone's oppinion before moving forward. 
+* How will you ensure that you are creating a safe environment where everyone feels comfortable speaking up? 
+  * being compassionate and understand that mistakes happen, encourage eachother to speak-up so that everyone can learn, adapt, and adjust in real-time.
+  * leave behind the judgement, everyone has different backgrouns and experiences 
+
+
