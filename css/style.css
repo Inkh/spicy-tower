@@ -1,0 +1,14 @@
+/* 8 x 20 Grid system */
+
+.game-wrapper {
+  width: 1000px;
+  background-color: maroon;
+  margin: 0 auto;
+}
+
+.collision-wrapper {
+  width: 800px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: #eeeeee;
+}
