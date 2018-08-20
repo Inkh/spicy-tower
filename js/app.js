@@ -2,36 +2,38 @@
 
 console.log('link');
 
-const gameMap = [
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 1],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [1, 1, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 1, 1, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 1, 1],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [1, 1, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 1, 1, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 1, 1, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 2, 0, 0, 0, 0],
-  [1, 1, 1, 1, 1, 1, 1, 1],
-];
+// const gameMap = [
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 1, 1, 1],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [1, 1, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 1, 1, 1, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 1, 1],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 1, 1, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [1, 1, 1, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 1, 1, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 1, 1, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 0, 1, 1, 0, 0],
+//   [0, 0, 0, 0, 0, 0, 0, 0],
+//   [0, 0, 0, 2, 0, 0, 0, 0],
+//   [1, 1, 1, 1, 1, 1, 1, 1],
+// ];
+
+// Blank canvas to populate with sub arrays
+var gameMap = [];
 
 // dynamically generate 2D array with subarrays of 0's
-function generateArray(row, column) {
-  var gameMap = [];
+function populateGameMap(row, column) {
   var sub = new Array(row).fill(0);
 
-  for (var i = 0; i <= column; i++) {
+  for (var i = 0; i < column; i++) {
     gameMap.push(sub);
   }
 
@@ -46,12 +48,14 @@ function Platform(x, y, width = 2, val = 1) {
   this.val = val;
 }
 
+// Prototype method to turn platform object into an array of usable data
 // n is number of indeces, which is equal to columns
 Platform.prototype.generatePlatform = function(n) {
   var platform = new Array(n).fill(0);
   var mappedObject = platform.map((el, idx) => {
-    if (idx <= (this.width + this.val) && idx >= this.x) {
-      return 1;
+    // debugger;
+    if (idx >= this.x && idx < this.x + this.width) {
+      return this.val;
     }
     return el;
   });
@@ -60,6 +64,7 @@ Platform.prototype.generatePlatform = function(n) {
 };
 
 // Generate platform objects to repopulate game array with data
+var ground = new Platform(0, 0, 8, 1);
 var sprite = new Platform(2, 2, 1, 2);
 var one = new Platform(4, 3);
 var two = new Platform(1, 5);
@@ -72,6 +77,7 @@ var eight = new Platform(4, 17);
 
 // Make array of game platform objects to iterate over and call prototype method
 var gamePlatforms = [
+  ground,
   sprite,
   one,
   two,
@@ -88,16 +94,20 @@ var gamePlatforms = [
 // invoke prototype method to turn Platform object into an array of 0's and 1's
 // iterate over pre-populated 2D array, and replace existing subarray of 0's with newly generated platform array
 
-function refillGameMap(gamePlatforms, n) {
-  var j = 0;
+function refillGameMap(gamePlatforms, row, col) {
+  // start at gamePlatforms.indexOf(sprite) because loop increments every other row
+  let j = 1;
+  // initialize gameMap and assign with a 2D array filled with 0's
+  let gameMap = populateGameMap(row, col);
+  // hard code ground in game map array
+  gameMap[gameMap.length-1] = gamePlatforms[gamePlatforms.indexOf(ground)].generatePlatform(8);
 
-  for (var i = gameMap.length - 2; i = 0; i -= 2) {
-    gameMap[i] = gamePlatforms[j].generatePlatform(n);
+  for (var i = gameMap.length - 2; i >= 2; i -= 2) {
+    gameMap[i] = gamePlatforms[j].generatePlatform(row);
     j++;
   }
 
   return gameMap;
 }
 
-
-console.log(refillGameMap(gamePlatforms, 8));
+refillGameMap(gamePlatforms, 8, 20);
