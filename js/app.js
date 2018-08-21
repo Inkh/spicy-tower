@@ -171,3 +171,29 @@ function update(){
     sprite.setVelocityY(-350);
   }
 }
+
+var h1 = document.getElementsByTagName('h1')[0];
+var start = document.getElementById('play');
+var tryagain = document.getElementById('tryagain');
+var seconds = 0;
+var t;
+
+function addTime(){
+  seconds++;
+  h1.textContent = 'Time: ' + seconds + ' seconds';
+  timer();
+}
+
+function timer(){
+  t = setTimeout(addTime, 1000);
+}
+
+document.addEventListener("keydown", startGame);
+
+function startGame(){
+  if(event.which){
+    console.log(event.which);
+    timer();
+    document.removeEventListener("keydown", startGame);
+  }
+}
