@@ -124,12 +124,17 @@ function preload() {
 var cursors;
 var sprite;
 var tile;
+var gameOver = false;
+var endGame;
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
 
+  //Endgame object creation. Place on page is temporary.
+  endGame = this.physics.add.staticGroup();
+  endGame.create(700, 500, 'tile');
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -151,6 +156,9 @@ function create() {
     }
   }
 
+  //Once player overlaps with object, invoke ender function to end user input and game.
+  this.physics.add.overlap(sprite, endGame, ender, null, this);
+
   sprite.setCollideWorldBounds(true);
   sprite.body.checkCollision.up = false;
   sprite.body.checkCollision.down = true;
@@ -160,6 +168,11 @@ function create() {
 }
 
 function update(){
+  if (gameOver){
+    sprite.setVelocityX(0);
+    return;
+  }
+
   if (cursors.left.isDown){
     sprite.setVelocityX(-160);
 
@@ -174,4 +187,10 @@ function update(){
   if (cursors.up.isDown && sprite.body.touching.down) {
     sprite.setVelocityY(-350);
   }
+}
+
+//Function that gets called when player sprite collides with  endGame object.
+function ender(){
+  gameOver = true;
+  sprite.setVelocityY(-500); //Double check that we're hitting this function.
 }
