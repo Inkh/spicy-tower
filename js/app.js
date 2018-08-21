@@ -12,7 +12,7 @@ let config = {
   backgroundColor: '#D3D3D3', // game background
   scene: {
     key: 'game',
-    // preload: preload,
+    preload: preload,
     create: create,
     // update: update
   }, // our newly created scene
@@ -118,6 +118,8 @@ function preload() {
   this.load.image('dead-platform', 'assets/dead.png');
 }
 
+//Global variable for key input
+var cursors;
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
@@ -125,8 +127,11 @@ function create() {
   var background = this.add.image(400, 300, 'sky');
   var sprite;
   let image;
+
   platforms = this.physics.add.staticGroup();
   platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  cursors = this.input.keyboard.createCursorKeys();
+
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -137,5 +142,39 @@ function create() {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
       }
     }
+  }
+
+  sprite.setCollideWorldBounds(true);
+  sprite.body.checkCollision.up = false;
+  sprite.body.checkCollision.down = true;
+  sprite.body.checkCollision.left = false;
+  sprite.body.checkCollision.right = false;
+  this.physics.add.collider(sprite, platforms);
+}
+
+function update(){
+  if (cursors.left.isDown)
+  {
+    console.log(cursors);
+    // sprite.setVelocityX(-160);
+
+    // sprite.anims.play('left', true);
+  }
+  else if (cursors.right.isDown)
+  {
+    // sprite.setVelocityX(160);
+
+    // sprite.anims.play('right', true);
+  }
+  else
+  {
+    sprite.setVelocityX(0);
+
+    // sprite.anims.play('turn');
+  }
+
+  if (cursors.up.isDown && sprite.body.touching.down)
+  {
+    sprite.setVelocityY(-750);
   }
 }
