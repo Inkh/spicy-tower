@@ -24,17 +24,11 @@ let config = {
       debug: false
     }
   },
-
+  parent: 'game'
 };
 
 // create the game, and pass it the configuration
 let game = new Phaser.Game(config);
-
-
-function preload ()
-{
-  this.load.image('tile', '../img/14.png');
-}
 
 
 
@@ -124,25 +118,26 @@ function refillGameMap(gamePlatforms, row, col) {
   return gameMap;
 }
 
-// function preload() {
-//   this.load.
-// }
+function preload() {
+  this.load.spritesheet('sprite', '../assets/dead.png',{ frameWidth: 32, frameHeight: 48 });
+  this.load.image('tile', '../assets/14.png');
+
+}
+
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
-  let image;
-  // this.physics.world.setBounds(0, 0, 600, 800);
 
-  // file.displayOriginX = 0;
-  // file.displayOriginY = 0;
-  // file.displayWidth = 20;
-  // file.displayHeight = 20;
-  // file.x = 0; star.y = 0;
-  // file.setGravity(40, 100);
-  // file.setBounce(1).setCollideWorldBounds(true);
+  var platforms;
+  // var background = this.add.image(400, 300, 'sky');
+  var sprite;
+  let image;
+  platforms = this.physics.add.staticGroup();
+  platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
+
 
       // this.add.image({ x: i, y: j});
       if (gameMap[i][j] === 0) {
@@ -155,16 +150,12 @@ function create() {
         tile.displayOriginY = 0;
         tile.displayWidth = 100;
         tile.displayHeight = 20;
-      } else if (gameMap[i][j] === 2) {
-        // rect.fillStyle('#808000');
 
+      } else if (gameMap[i][j] === 2) {
+        sprite = this.physics.add.sprite(200, 100, 'sprite');
       }
     }
-    // rect.fillRect(j * 100, i * 30, 100, 30);
   }
+
 }
 
-// function create() {
-
-
-// }
