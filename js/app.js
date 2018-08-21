@@ -184,7 +184,7 @@ var t;
 
 function addTime(){
   seconds++;
-  h1.textContent = seconds;
+  h1.textContent = 'Time: ' + seconds + ' seconds';
   timer();
 }
 
