@@ -9,6 +9,7 @@ let config = {
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 800, // game width
   height: 600, // game height
+
   backgroundColor: '#D3D3D3', // game background
   scene: {
     key: 'game',
@@ -28,6 +29,10 @@ let config = {
 
 // create the game, and pass it the configuration
 var game = new Phaser.Game(config);
+
+
+
+
 
 // Blank canvas to populate with sub arrays
 var gameMap = [];
@@ -114,30 +119,43 @@ function refillGameMap(gamePlatforms, row, col) {
 }
 
 function preload() {
-  this.load.spritesheet('sprite', 'assets/dead.png');
-  this.load.image('dead-platform', 'assets/dead.png');
+  this.load.spritesheet('sprite', '../assets/dead.png',{ frameWidth: 32, frameHeight: 48 });
+  this.load.image('tile', '../assets/14.png');
+
 }
 
 //Global variable for key input
 var cursors;
 var sprite;
-var platforms;
+var tile;
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
-  var background = this.add.image(400, 300, 'sky');
+  // var background = this.add.image(400, 300, 'sky');
   let image;
 
-  platforms = this.physics.add.staticGroup();
-  platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  tile = this.physics.add.staticGroup();
+  // platforms.create(400, 568, 'ground').setScale(2).refreshBody();
   cursors = this.input.keyboard.createCursorKeys();
 
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
 
-      if (gameMap[i][j] === 1) {
-        platforms.create(j * 100, i * 30, 'dead-platform');
+
+      // this.add.image({ x: i, y: j});
+      if (gameMap[i][j] === 0) {
+        // rect.fillStyle('#800000');
+        // this.add.image(j * 100, i * 30, 'tile');
+      } else if (gameMap[i][j] === 1) {
+        // rect.fillStyle('#FFFF00');
+        tile.create(j * 100, i * 30, 'tile');
+        // tile =this.add.image(j * 100, i * 30, 'tile');
+        tile.displayOriginX = 0;
+        tile.displayOriginY = 0;
+        tile.displayWidth = 100;
+        tile.displayHeight = 20;
+
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
       }
@@ -149,7 +167,7 @@ function create() {
   sprite.body.checkCollision.down = true;
   sprite.body.checkCollision.left = false;
   sprite.body.checkCollision.right = false;
-  this.physics.add.collider(sprite, platforms);
+  this.physics.add.collider(sprite, tile);
 }
 
 function update(){
