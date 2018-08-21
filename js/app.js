@@ -10,16 +10,18 @@ let config = {
   height: 600, // game height
 
   backgroundColor: '#D3D3D3', // game background
-  scene: {
-    key: 'game',
-    preload: preload,
-    create: create,
-    update: update
-  }, // our newly created scene
+  scene: gameScene,
+  // scene: {
+  //   // key: 'game',
+  //   preload: preload,
+  //   create: create,
+  //   update: update,
+  //   // gameOver: this.scene.restart()
+  // }, // our newly created scene
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 500}, // include gravity
+      // gravity: { y: 500}, // include gravity
       debug: true
     }
   },
@@ -113,7 +115,11 @@ function refillGameMap(gamePlatforms, col, row) {
   return gameMap;
 }
 
-function preload() {
+gameScene.replay = function(){
+  this.scene.restart();
+};
+
+gameScene.preload = function() {
   this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
 }
@@ -122,12 +128,17 @@ function preload() {
 var cursors;
 var sprite;
 var tile;
+var gameOver = false;
+var endGame;
 
-function create() {
+gameScene.create = function() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
 
+  //Endgame object creation. Place on page is temporary.
+  endGame = this.physics.add.staticGroup();
+  endGame.create(50, 70, 'tile');
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -140,12 +151,18 @@ function create() {
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
+        //Set gravity to player sprite only
+        sprite.body.gravity.y = 500;
         sprite.body.setSize(0, 500);
         sprite.displayWidth = 40;
         sprite.displayHeight = 40;
+        sprite.setCollideWorldBounds(true);
       }
     }
   }
+
+  //Once player overlaps with object, invoke ender function to end user input and game.
+  this.physics.add.overlap(sprite, endGame, ender, null, this);
 
   sprite.setCollideWorldBounds(true);
   sprite.body.checkCollision.up = false;
@@ -153,9 +170,14 @@ function create() {
   sprite.body.checkCollision.left = false;
   sprite.body.checkCollision.right = false;
   this.physics.add.collider(sprite, tile);
-}
+};
 
-function update(){
+gameScene.update = function(){
+  if (gameOver){
+    sprite.setVelocityX(0);
+    return;
+  }
+
   if (cursors.left.isDown){
     sprite.setVelocityX(-160);
 
@@ -170,8 +192,25 @@ function update(){
   if (cursors.up.isDown && sprite.body.touching.down) {
     sprite.setVelocityY(-350);
   }
+};
+
+//Function that gets called when player sprite collides with  endGame object.
+function ender(){
+  gameOver = true;
+
+  //Double check that we're hitting this function.
+  sprite.setVelocityY(-500);
+  sprite.body.gravity.y = 0;
+  sprite.setCollideWorldBounds(false);
+
 }
 
+// function restart(){
+//   this.scene.restart();
+// }
+
+var re = document.getElementById('restart');
+re.addEventListener('click', gameScene.replay);
 var h1 = document.getElementsByTagName('h1')[0];
 var start = document.getElementById('play');
 var tryagain = document.getElementById('tryagain');
