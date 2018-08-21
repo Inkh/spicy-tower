@@ -192,4 +192,12 @@ function timer(){
   t = setTimeout(addTime, 1000);
 }
 
-start.onclick = timer;
+document.addEventListener("keydown", startGame);
+
+function startGame(){
+  if(event.which){
+    console.log(event.which);
+    timer();
+    document.removeEventListener("keydown", startGame);
+  }
+}
