@@ -30,10 +30,6 @@ let config = {
 // create the game, and pass it the configuration
 var game = new Phaser.Game(config);
 
-
-
-
-
 // Blank canvas to populate with sub arrays
 var gameMap = [];
 
@@ -73,7 +69,7 @@ Platform.prototype.generatePlatform = function(n) {
 
 // Generate platform objects to repopulate game array with data
 var ground = new Platform(0, 0, 8, 1);
-var sprite = new Platform(2, 2, 1, 2);
+var spriteIndex = new Platform(2, 2, 1, 2);
 var one = new Platform(4, 3);
 var two = new Platform(1, 5);
 var three = new Platform(4, 7);
@@ -86,7 +82,7 @@ var eight = new Platform(4, 17);
 // Make array of game platform objects to iterate over and call prototype method
 var gamePlatforms = [
   ground,
-  sprite,
+  spriteIndex,
   one,
   two,
   three,
@@ -119,8 +115,8 @@ function refillGameMap(gamePlatforms, row, col) {
 }
 
 function preload() {
-  this.load.spritesheet('sprite', '../assets/dead.png',{ frameWidth: 32, frameHeight: 48 });
-  this.load.image('tile', '../assets/14.png');
+  this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
+  this.load.image('tile', 'assets/14.png');
 
 }
 
@@ -131,33 +127,26 @@ var tile;
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
-  // var background = this.add.image(400, 300, 'sky');
-  let image;
-
   tile = this.physics.add.staticGroup();
-  // platforms.create(400, 568, 'ground').setScale(2).refreshBody();
   cursors = this.input.keyboard.createCursorKeys();
 
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
 
-
-      // this.add.image({ x: i, y: j});
-      if (gameMap[i][j] === 0) {
-        // rect.fillStyle('#800000');
-        // this.add.image(j * 100, i * 30, 'tile');
-      } else if (gameMap[i][j] === 1) {
-        // rect.fillStyle('#FFFF00');
+      if (gameMap[i][j] === 1) {
         tile.create(j * 100, i * 30, 'tile');
-        // tile =this.add.image(j * 100, i * 30, 'tile');
         tile.displayOriginX = 0;
         tile.displayOriginY = 0;
         tile.displayWidth = 100;
         tile.displayHeight = 20;
-
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
+        // sprite.body.setSize(1, 1, 1, 1);
+        sprite.displayWidth = 70;
+        sprite.displayHeight = 70;
+        // sprite.setBounce(0.2);
+        sprite.setCollideWorldBounds(true);
       }
     }
   }
@@ -172,7 +161,6 @@ function create() {
 
 function update(){
   if (cursors.left.isDown){
-    console.log(cursors);
     sprite.setVelocityX(-160);
 
   } else if (cursors.right.isDown) {
