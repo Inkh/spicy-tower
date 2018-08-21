@@ -187,3 +187,21 @@ function update(){
     sprite.setVelocityY(-350);
   }
 }
+
+var h1 = document.getElementsByTagName('h1')[0];
+var start = document.getElementById('play');
+var tryagain = document.getElementById('tryagain');
+var seconds = 0;
+var t;
+
+function addTime(){
+  seconds++;
+  h1.textContent = seconds;
+  timer();
+}
+
+function timer(){
+  t = setTimeout(addTime, 1000);
+}
+
+start.onclick = timer;
