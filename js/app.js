@@ -121,40 +121,40 @@ function refillGameMap(gamePlatforms, row, col) {
 
 var gameArea = document.getElementsByClassName('game')[0];
 
-function draw(){
-  // var drawingBoard = document.createElement('canvas');
-  // var drawingBoard = graphics;
-  // drawingBoard.id = 'level';
-  // drawingBoard.setAttribute('width', '800');
-  // drawingBoard.setAttribute('height', '600');
+// function draw(){
+// var drawingBoard = document.createElement('canvas');
+// var drawingBoard = graphics;
+// drawingBoard.id = 'level';
+// drawingBoard.setAttribute('width', '800');
+// drawingBoard.setAttribute('height', '600');
 
-  // var ctx = drawingBoard.getContext('2d');
+// var ctx = drawingBoard.getContext('2d');
 
-  for (var i = 0; i < gameMap.length;i++){
-    for (var j = 0; j < gameMap[i].length;j++){
-      if (gameMap[i][j] === 2){
-        graphics.fillStyle = 'purple';
-      } else if (gameMap[i][j] === 1){
-        graphics.fillStyle = 'gray';
-      } else if (gameMap[i][j] === 0){
-        graphics.fillStyle = 'white';
-        console.log('hey!');
-      }
-      graphics.fillRect(j * 100, i * 30, 100, 30);
-    }
-  }
-  // gameArea.append(drawingBoard);
-  // console.log(drawingBoard);
+// for (var i = 0; i < gameMap.length;i++){
+//   for (var j = 0; j < gameMap[i].length;j++){
+//     if (gameMap[i][j] === 2){
+//       graphics.fillStyle = 'purple';
+//     } else if (gameMap[i][j] === 1){
+//       graphics.fillStyle = 'gray';
+//     } else if (gameMap[i][j] === 0){
+//       graphics.fillStyle = 'white';
+//       console.log('hey!');
+//     }
+//     graphics.fillRect(j * 100, i * 30, 100, 30);
+//   }
+// }
+// gameArea.append(drawingBoard);
+// console.log(drawingBoard);
 
-  // document.addEventListener('DOMContentLoaded', function() {
-  //   game.canvas.id = 'gameContentField';
-  //   console.log(game.canvas);
-  //   var gameCanvas = document.getElementById('gameContentField');
-  //   console.log(gameCanvas);
-  //   // drawingBoard.style.zIndex = '1';
-  //   gameCanvas.append(drawingBoard);
-  // });
-}
+// document.addEventListener('DOMContentLoaded', function() {
+//   game.canvas.id = 'gameContentField';
+//   console.log(game.canvas);
+//   var gameCanvas = document.getElementById('gameContentField');
+//   console.log(gameCanvas);
+//   // drawingBoard.style.zIndex = '1';
+//   gameCanvas.append(drawingBoard);
+// });
+// }
 
 // draw();
 
@@ -167,9 +167,6 @@ function draw(){
 
 
 
-
-// let graphics = new Graphics(gameScene);
-
 // function preload() {
 //   this.load.
 // }
@@ -181,7 +178,6 @@ function create() {
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
       // debugger;
-      // rect = gameScene.add.graphics({ x: i, y: j });
       rect = this.add.graphics({ x: i, y: j});
       if (gameMap[i][j] === 0) {
         // rect.fillStyle('#800000');
