@@ -2,7 +2,7 @@ console.log('link');
 
 // create a new scene named "Game"
 // do we need this?
-let gameScene = new Phaser.Scene('Game');
+var gameScene = new Phaser.Scene('Game');
 
 // our game's configuration
 let config = {
@@ -15,7 +15,7 @@ let config = {
     key: 'game',
     preload: preload,
     create: create,
-    // update: update
+    update: update
   }, // our newly created scene
   physics: {
     default: 'arcade',
@@ -28,7 +28,7 @@ let config = {
 };
 
 // create the game, and pass it the configuration
-let game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
 
 
 
@@ -124,16 +124,20 @@ function preload() {
 
 }
 
+//Global variable for key input
+var cursors;
+var sprite;
+var tile;
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
-
-  var platforms;
   // var background = this.add.image(400, 300, 'sky');
-  var sprite;
   let image;
-  platforms = this.physics.add.staticGroup();
-  platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+
+  tile = this.physics.add.staticGroup();
+  // platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+  cursors = this.input.keyboard.createCursorKeys();
+
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -145,7 +149,8 @@ function create() {
         // this.add.image(j * 100, i * 30, 'tile');
       } else if (gameMap[i][j] === 1) {
         // rect.fillStyle('#FFFF00');
-        var tile =this.add.image(j * 100, i * 30, 'tile');
+        tile.create(j * 100, i * 30, 'tile');
+        // tile =this.add.image(j * 100, i * 30, 'tile');
         tile.displayOriginX = 0;
         tile.displayOriginY = 0;
         tile.displayWidth = 100;
@@ -157,5 +162,28 @@ function create() {
     }
   }
 
+  sprite.setCollideWorldBounds(true);
+  sprite.body.checkCollision.up = false;
+  sprite.body.checkCollision.down = true;
+  sprite.body.checkCollision.left = false;
+  sprite.body.checkCollision.right = false;
+  this.physics.add.collider(sprite, tile);
 }
 
+function update(){
+  if (cursors.left.isDown){
+    console.log(cursors);
+    sprite.setVelocityX(-160);
+
+  } else if (cursors.right.isDown) {
+    sprite.setVelocityX(160);
+
+  } else {
+    sprite.setVelocityX(0);
+
+  }
+
+  if (cursors.up.isDown && sprite.body.touching.down) {
+    sprite.setVelocityY(-350);
+  }
+}
