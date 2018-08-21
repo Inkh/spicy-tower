@@ -112,33 +112,29 @@ function refillGameMap(gamePlatforms, row, col) {
   return gameMap;
 }
 
-// function preload() {
-//   this.load.
-// }
+function preload() {
+  this.load.spritesheet('sprite', 'dead.png');
+  this.load.image('dead-platform', 'dead.png');
+}
+
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
-  let rect;
+  var platforms;
+  var background = this.add.image(400, 300, 'sky');
+  var sprite;
+  let image;
+  platforms = this.physics.add.staticGroup();
+  platforms.create(400, 568, 'ground').setScale(2).refreshBody();
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
 
-      rect = this.add.graphics({ x: i, y: j});
-      if (gameMap[i][j] === 0) {
-        // rect.fillStyle('#800000');
-        rect.fillRect(j * 100, i * 30, 100, 30);
-      } else if (gameMap[i][j] === 1) {
-        // rect.fillStyle('#FFFF00');
-
+      if (gameMap[i][j] === 1) {
+        platforms.create(j * 100, i * 30, 'dead-platform');
       } else if (gameMap[i][j] === 2) {
-        // rect.fillStyle('#808000');
-
+        sprite = this.physics.add.sprite(200, 100, 'sprite');
       }
     }
-    // rect.fillRect(j * 100, i * 30, 100, 30);
   }
 }
-
-// function create() {
-
-// }
