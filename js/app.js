@@ -11,12 +11,14 @@ let config = {
   height: 600, // game height
 
   backgroundColor: '#D3D3D3', // game background
-  scene: {
-    key: 'game',
-    preload: preload,
-    create: create,
-    update: update
-  }, // our newly created scene
+  scene: gameScene,
+  // scene: {
+  //   // key: 'game',
+  //   preload: preload,
+  //   create: create,
+  //   update: update,
+  //   // gameOver: this.scene.restart()
+  // }, // our newly created scene
   physics: {
     default: 'arcade',
     arcade: {
@@ -114,11 +116,15 @@ function refillGameMap(gamePlatforms, row, col) {
   return gameMap;
 }
 
-function preload() {
+gameScene.replay = function(){
+  this.scene.restart();
+};
+
+gameScene.preload = function() {
   this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/14.png');
 
-}
+};
 
 //Global variable for key input
 var cursors;
@@ -127,7 +133,7 @@ var tile;
 var gameOver = false;
 var endGame;
 
-function create() {
+gameScene.create = function() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
@@ -166,9 +172,9 @@ function create() {
   sprite.body.checkCollision.left = false;
   sprite.body.checkCollision.right = false;
   this.physics.add.collider(sprite, tile);
-}
+};
 
-function update(){
+gameScene.update = function(){
   if (gameOver){
     sprite.setVelocityX(0);
     return;
@@ -188,7 +194,7 @@ function update(){
   if (cursors.up.isDown && sprite.body.touching.down) {
     sprite.setVelocityY(-350);
   }
-}
+};
 
 //Function that gets called when player sprite collides with  endGame object.
 function ender(){
@@ -200,3 +206,10 @@ function ender(){
   sprite.setCollideWorldBounds(false);
 
 }
+
+// function restart(){
+//   this.scene.restart();
+// }
+
+var re = document.getElementById('restart');
+re.addEventListener('click', gameScene.replay);
