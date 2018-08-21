@@ -9,10 +9,11 @@ let config = {
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 800, // game width
   height: 600, // game height
+
   backgroundColor: '#D3D3D3', // game background
   scene: {
     key: 'game',
-    // preload: preload,
+    preload: preload,
     create: create,
     // update: update
   }, // our newly created scene
@@ -28,6 +29,10 @@ let config = {
 
 // create the game, and pass it the configuration
 let game = new Phaser.Game(config);
+
+
+
+
 
 // Blank canvas to populate with sub arrays
 var gameMap = [];
@@ -114,15 +119,17 @@ function refillGameMap(gamePlatforms, row, col) {
 }
 
 function preload() {
-  this.load.spritesheet('sprite', 'assets/dead.png');
-  this.load.image('dead-platform', 'assets/dead.png');
+  this.load.spritesheet('sprite', '../assets/dead.png',{ frameWidth: 32, frameHeight: 48 });
+  this.load.image('tile', '../assets/14.png');
+
 }
 
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
+
   var platforms;
-  var background = this.add.image(400, 300, 'sky');
+  // var background = this.add.image(400, 300, 'sky');
   var sprite;
   let image;
   platforms = this.physics.add.staticGroup();
@@ -131,11 +138,24 @@ function create() {
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
 
-      if (gameMap[i][j] === 1) {
-        platforms.create(j * 100, i * 30, 'dead-platform');
+
+      // this.add.image({ x: i, y: j});
+      if (gameMap[i][j] === 0) {
+        // rect.fillStyle('#800000');
+        // this.add.image(j * 100, i * 30, 'tile');
+      } else if (gameMap[i][j] === 1) {
+        // rect.fillStyle('#FFFF00');
+        var tile =this.add.image(j * 100, i * 30, 'tile');
+        tile.displayOriginX = 0;
+        tile.displayOriginY = 0;
+        tile.displayWidth = 100;
+        tile.displayHeight = 20;
+
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
       }
     }
   }
+
 }
+
