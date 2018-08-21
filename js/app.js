@@ -152,8 +152,17 @@ function draw(){
       ctx.fillRect(j * 100, i * 30, 100, 30);
     }
   }
-  gameArea.append(drawingBoard);
+  // gameArea.append(drawingBoard);
   console.log(drawingBoard);
+
+  document.addEventListener('DOMContentLoaded', function() {
+    game.canvas.id = 'gameContentField';
+    console.log(game.canvas);
+    var gameCanvas = document.getElementById('gameContentField');
+    console.log(gameCanvas);
+    // drawingBoard.style.zIndex = '1';
+    gameCanvas.append(drawingBoard);
+  });
 }
 
 draw();
@@ -164,3 +173,6 @@ draw();
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// END MAP CREATION BLOCK //////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
