@@ -112,61 +112,6 @@ function refillGameMap(gamePlatforms, row, col) {
   return gameMap;
 }
 
-// refillGameMap(gamePlatforms, 8, 20);
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// MAP CREATION BLOCK //////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-var gameArea = document.getElementsByClassName('game')[0];
-
-// function draw(){
-// var drawingBoard = document.createElement('canvas');
-// var drawingBoard = graphics;
-// drawingBoard.id = 'level';
-// drawingBoard.setAttribute('width', '800');
-// drawingBoard.setAttribute('height', '600');
-
-// var ctx = drawingBoard.getContext('2d');
-
-// for (var i = 0; i < gameMap.length;i++){
-//   for (var j = 0; j < gameMap[i].length;j++){
-//     if (gameMap[i][j] === 2){
-//       graphics.fillStyle = 'purple';
-//     } else if (gameMap[i][j] === 1){
-//       graphics.fillStyle = 'gray';
-//     } else if (gameMap[i][j] === 0){
-//       graphics.fillStyle = 'white';
-//       console.log('hey!');
-//     }
-//     graphics.fillRect(j * 100, i * 30, 100, 30);
-//   }
-// }
-// gameArea.append(drawingBoard);
-// console.log(drawingBoard);
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   game.canvas.id = 'gameContentField';
-//   console.log(game.canvas);
-//   var gameCanvas = document.getElementById('gameContentField');
-//   console.log(gameCanvas);
-//   // drawingBoard.style.zIndex = '1';
-//   gameCanvas.append(drawingBoard);
-// });
-// }
-
-// draw();
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////// END MAP CREATION BLOCK //////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 // function preload() {
 //   this.load.
 // }
@@ -174,10 +119,10 @@ var gameArea = document.getElementsByClassName('game')[0];
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
   let rect;
-  // debugger;
+
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
-      // debugger;
+
       rect = this.add.graphics({ x: i, y: j});
       if (gameMap[i][j] === 0) {
         // rect.fillStyle('#800000');
@@ -192,8 +137,6 @@ function create() {
     }
     // rect.fillRect(j * 100, i * 30, 100, 30);
   }
-
-  // rect.endFill();
 }
 
 // function create() {
