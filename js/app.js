@@ -161,7 +161,6 @@ function create() {
 
 function update(){
   if (cursors.left.isDown){
-    console.log(cursors);
     sprite.setVelocityX(-160);
 
   } else if (cursors.right.isDown) {
