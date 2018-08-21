@@ -23,6 +23,7 @@ let config = {
       debug: false
     }
   },
+  parent: 'game'
 };
 
 // create the game, and pass it the configuration
@@ -113,8 +114,8 @@ function refillGameMap(gamePlatforms, row, col) {
 }
 
 function preload() {
-  this.load.spritesheet('sprite', 'dead.png');
-  this.load.image('dead-platform', 'dead.png');
+  this.load.spritesheet('sprite', 'assets/dead.png');
+  this.load.image('dead-platform', 'assets/dead.png');
 }
 
 
