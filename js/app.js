@@ -1,6 +1,7 @@
 console.log('link');
 
 // create a new scene named "Game"
+// do we need this?
 let gameScene = new Phaser.Scene('Game');
 
 // our game's configuration
@@ -8,38 +9,24 @@ let config = {
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 800, // game width
   height: 600, // game height
-  scene: gameScene // our newly created scene
+  backgroundColor: '#D3D3D3', // game background
+  scene: {
+    key: 'game',
+    // preload: preload,
+    create: create,
+    // update: update
+  }, // our newly created scene
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 500}, // include gravity
+      debug: false
+    }
+  },
 };
 
 // create the game, and pass it the configuration
 let game = new Phaser.Game(config);
-
-let graphics = new Graphics(gameScene);
-// graphics;
-
-// const gameMap = [
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 1, 1, 1],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [1, 1, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 1, 1, 1, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 1, 1],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 1, 1, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [1, 1, 1, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 1, 1, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 1, 1, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 0, 1, 1, 0, 0],
-//   [0, 0, 0, 0, 0, 0, 0, 0],
-//   [0, 0, 0, 2, 0, 0, 0, 0],
-//   [1, 1, 1, 1, 1, 1, 1, 1],
-// ];
 
 // Blank canvas to populate with sub arrays
 var gameMap = [];
@@ -125,7 +112,7 @@ function refillGameMap(gamePlatforms, row, col) {
   return gameMap;
 }
 
-refillGameMap(gamePlatforms, 8, 20);
+// refillGameMap(gamePlatforms, 8, 20);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -135,40 +122,41 @@ refillGameMap(gamePlatforms, 8, 20);
 var gameArea = document.getElementsByClassName('game')[0];
 
 function draw(){
-  var drawingBoard = document.createElement('canvas');
-  drawingBoard.id = 'level';
-  drawingBoard.setAttribute('width', '800');
-  drawingBoard.setAttribute('height', '600');
+  // var drawingBoard = document.createElement('canvas');
+  // var drawingBoard = graphics;
+  // drawingBoard.id = 'level';
+  // drawingBoard.setAttribute('width', '800');
+  // drawingBoard.setAttribute('height', '600');
 
-  var ctx = drawingBoard.getContext('2d');
+  // var ctx = drawingBoard.getContext('2d');
 
   for (var i = 0; i < gameMap.length;i++){
     for (var j = 0; j < gameMap[i].length;j++){
       if (gameMap[i][j] === 2){
-        ctx.fillStyle = 'purple';
+        graphics.fillStyle = 'purple';
       } else if (gameMap[i][j] === 1){
-        ctx.fillStyle = 'gray';
+        graphics.fillStyle = 'gray';
       } else if (gameMap[i][j] === 0){
-        ctx.fillStyle = 'white';
+        graphics.fillStyle = 'white';
         console.log('hey!');
       }
-      ctx.fillRect(j * 100, i * 30, 100, 30);
+      graphics.fillRect(j * 100, i * 30, 100, 30);
     }
   }
   // gameArea.append(drawingBoard);
-  console.log(drawingBoard);
+  // console.log(drawingBoard);
 
-  document.addEventListener('DOMContentLoaded', function() {
-    game.canvas.id = 'gameContentField';
-    console.log(game.canvas);
-    var gameCanvas = document.getElementById('gameContentField');
-    console.log(gameCanvas);
-    // drawingBoard.style.zIndex = '1';
-    gameCanvas.append(drawingBoard);
-  });
+  // document.addEventListener('DOMContentLoaded', function() {
+  //   game.canvas.id = 'gameContentField';
+  //   console.log(game.canvas);
+  //   var gameCanvas = document.getElementById('gameContentField');
+  //   console.log(gameCanvas);
+  //   // drawingBoard.style.zIndex = '1';
+  //   gameCanvas.append(drawingBoard);
+  // });
 }
 
-draw();
+// draw();
 
 
 
@@ -179,3 +167,39 @@ draw();
 
 
 
+
+// let graphics = new Graphics(gameScene);
+
+// function preload() {
+//   this.load.
+// }
+
+function create() {
+  const gameMap = refillGameMap(gamePlatforms, 8, 20);
+  let rect;
+  // debugger;
+  for (var i = 0; i < gameMap.length; i++) {
+    for (var j = 0; j < gameMap[i].length; j++) {
+      // debugger;
+      // rect = gameScene.add.graphics({ x: i, y: j });
+      rect = this.add.graphics({ x: i, y: j});
+      if (gameMap[i][j] === 0) {
+        // rect.fillStyle('#800000');
+        rect.fillRect(j * 100, i * 30, 100, 30);
+      } else if (gameMap[i][j] === 1) {
+        // rect.fillStyle('#FFFF00');
+
+      } else if (gameMap[i][j] === 2) {
+        // rect.fillStyle('#808000');
+
+      }
+    }
+    // rect.fillRect(j * 100, i * 30, 100, 30);
+  }
+
+  // rect.endFill();
+}
+
+// function create() {
+
+// }
