@@ -2,7 +2,7 @@ console.log('link');
 
 // create a new scene named "Game"
 // do we need this?
-let gameScene = new Phaser.Scene('Game');
+var gameScene = new Phaser.Scene('Game');
 
 // our game's configuration
 let config = {
@@ -14,7 +14,7 @@ let config = {
     key: 'game',
     preload: preload,
     create: create,
-    // update: update
+    update: update
   }, // our newly created scene
   physics: {
     default: 'arcade',
@@ -27,7 +27,7 @@ let config = {
 };
 
 // create the game, and pass it the configuration
-let game = new Phaser.Game(config);
+var game = new Phaser.Game(config);
 
 // Blank canvas to populate with sub arrays
 var gameMap = [];
@@ -120,12 +120,12 @@ function preload() {
 
 //Global variable for key input
 var cursors;
+var sprite;
+var platforms;
 
 function create() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
-  var platforms;
   var background = this.add.image(400, 300, 'sky');
-  var sprite;
   let image;
 
   platforms = this.physics.add.staticGroup();
@@ -153,28 +153,19 @@ function create() {
 }
 
 function update(){
-  if (cursors.left.isDown)
-  {
+  if (cursors.left.isDown){
     console.log(cursors);
-    // sprite.setVelocityX(-160);
+    sprite.setVelocityX(-160);
 
-    // sprite.anims.play('left', true);
-  }
-  else if (cursors.right.isDown)
-  {
-    // sprite.setVelocityX(160);
+  } else if (cursors.right.isDown) {
+    sprite.setVelocityX(160);
 
-    // sprite.anims.play('right', true);
-  }
-  else
-  {
+  } else {
     sprite.setVelocityX(0);
 
-    // sprite.anims.play('turn');
   }
 
-  if (cursors.up.isDown && sprite.body.touching.down)
-  {
-    sprite.setVelocityY(-750);
+  if (cursors.up.isDown && sprite.body.touching.down) {
+    sprite.setVelocityY(-350);
   }
 }
