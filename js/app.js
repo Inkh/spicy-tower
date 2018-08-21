@@ -1,7 +1,6 @@
 console.log('link');
 
 // create a new scene named "Game"
-// do we need this?
 var gameScene = new Phaser.Scene('Game');
 
 // our game's configuration
@@ -21,7 +20,7 @@ let config = {
     default: 'arcade',
     arcade: {
       gravity: { y: 500}, // include gravity
-      debug: false
+      debug: true
     }
   },
   parent: 'game'
@@ -34,10 +33,10 @@ var game = new Phaser.Game(config);
 var gameMap = [];
 
 // dynamically generate 2D array with subarrays of 0's
-function populateGameMap(row, column) {
-  var sub = new Array(row).fill(0);
+function populateGameMap(col, row) {
+  var sub = new Array(col).fill(0);
 
-  for (var i = 0; i < column; i++) {
+  for (var i = 0; i < row; i++) {
     gameMap.push(sub);
   }
 
@@ -57,7 +56,6 @@ function Platform(x, y, width = 2, val = 1) {
 Platform.prototype.generatePlatform = function(n) {
   var platform = new Array(n).fill(0);
   var mappedObject = platform.map((el, idx) => {
-    // debugger;
     if (idx >= this.x && idx < this.x + this.width) {
       return this.val;
     }
@@ -98,26 +96,26 @@ var gamePlatforms = [
 // invoke prototype method to turn Platform object into an array of 0's and 1's
 // iterate over pre-populated 2D array, and replace existing subarray of 0's with newly generated platform array
 
-function refillGameMap(gamePlatforms, row, col) {
+function refillGameMap(gamePlatforms, col, row) {
   // start at gamePlatforms.indexOf(sprite) because loop increments every other row
   let j = 1;
   // initialize gameMap and assign with a 2D array filled with 0's
-  let gameMap = populateGameMap(row, col);
+  let gameMap = populateGameMap(col, row);
   // hard code ground in game map array
   gameMap[gameMap.length-1] = gamePlatforms[gamePlatforms.indexOf(ground)].generatePlatform(8);
 
   for (var i = gameMap.length - 2; i >= 2; i -= 2) {
-    gameMap[i] = gamePlatforms[j].generatePlatform(row);
-    j++;
+    if (gamePlatforms[j]) {
+      gameMap[i] = gamePlatforms[j].generatePlatform(col);
+      j++;
+    }
   }
-
   return gameMap;
 }
 
 function preload() {
   this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/14.png');
-
 }
 
 //Global variable for key input
@@ -135,18 +133,16 @@ function create() {
     for (var j = 0; j < gameMap[i].length; j++) {
 
       if (gameMap[i][j] === 1) {
-        tile.create(j * 100, i * 30, 'tile');
+        tile.create(j * 120, i * 30, 'tile');
         tile.displayOriginX = 0;
         tile.displayOriginY = 0;
         tile.displayWidth = 100;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
-        // sprite.body.setSize(1, 1, 1, 1);
-        sprite.displayWidth = 70;
-        sprite.displayHeight = 70;
-        // sprite.setBounce(0.2);
-        sprite.setCollideWorldBounds(true);
+        sprite.body.setSize(0, 500);
+        sprite.displayWidth = 40;
+        sprite.displayHeight = 40;
       }
     }
   }
