@@ -115,7 +115,7 @@ function refillGameMap(gamePlatforms, col, row) {
 
 function preload() {
   this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
-  this.load.image('tile', 'assets/14.png');
+  this.load.image('tile', 'assets/15-01.png');
 }
 
 //Global variable for key input
@@ -136,7 +136,7 @@ function create() {
         tile.create(j * 120, i * 30, 'tile');
         tile.displayOriginX = 0;
         tile.displayOriginY = 0;
-        tile.displayWidth = 100;
+        tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
