@@ -115,8 +115,8 @@ function refillGameMap(gamePlatforms, row, col) {
 }
 
 function preload() {
-  this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
-  this.load.image('tile', 'assets/14.png');
+  this.load.image('sprite', 'spicy-tower/assets/dead.png', { frameWidth: 32, frameHeight: 48 });
+  this.load.image('tile', 'spicy-tower/assets/14.png');
 
 }
 
