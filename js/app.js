@@ -20,8 +20,8 @@ let config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 500}, // include gravity
-      debug: false
+      // gravity: { y: 500}, // include gravity
+      debug: true
     }
   },
   parent: 'game'
@@ -147,7 +147,8 @@ function create() {
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
         sprite = this.physics.add.sprite(200, 100, 'sprite');
-        // sprite.body.setSize(1, 1, 1, 1);
+        //Set gravity to player sprite only
+        sprite.body.gravity.y = 500;
         sprite.displayWidth = 70;
         sprite.displayHeight = 70;
         // sprite.setBounce(0.2);
@@ -192,5 +193,10 @@ function update(){
 //Function that gets called when player sprite collides with  endGame object.
 function ender(){
   gameOver = true;
-  sprite.setVelocityY(-500); //Double check that we're hitting this function.
+
+  //Double check that we're hitting this function.
+  sprite.setVelocityY(-500);
+  sprite.body.gravity.y = 0;
+  sprite.setCollideWorldBounds(false);
+
 }
