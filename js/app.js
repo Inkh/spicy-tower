@@ -14,6 +14,9 @@ let config = {
 // create the game, and pass it the configuration
 let game = new Phaser.Game(config);
 
+let graphics = new Graphics(gameScene);
+// graphics;
+
 // const gameMap = [
 //   [0, 0, 0, 0, 0, 0, 0, 0],
 //   [0, 0, 0, 0, 0, 1, 1, 1],
