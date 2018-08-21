@@ -1,21 +1,63 @@
+body {
+  background-color: #494949;
+}
+
 nav {
   width: 100%;
-  background-color: #330000;
-  height: 80px;
+  /* background-color: #330000; */
+  background-color: #1b1b1b;
+  height: 110px;
   margin-bottom: 20px;
 }
 
-main {
-  width: 95%;
-  height: 1000px;
-  background-color: #eeeeee;
-  margin: 0 auto;
-}
-
-.nav-links {
+nav .nav-accent {
   height: 5px;
   width: 100%;
   position: relative;
   top: 75px;
-  background-color: #dd9427;
+  background-color: #dd5b27;
+}
+
+nav .nav-links {
+  width: 100%;
+  position: relative;
+  height: 30px;
+  top: 75px;
+  background-color: #929292;
+}
+
+nav ul {
+  text-align: center;
+}
+
+nav li {
+  display: inline-block;
+  line-height: 1.9;
+  /* margin-left: 30px; */
+  width: 15%;
+}
+
+nav li a {
+  /* color: #2c1602; */
+  color: #1b1b1b;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+nav li a:hover {
+  color: #36241a;
+}
+
+main {
+  width: 97%;
+  height: auto;
+  background-color: #eeeeee;
+  margin: 0 auto;
+}
+
+#game {
+  margin: 0 auto;
+  width: 800px;
+  text-align: center;
 }
