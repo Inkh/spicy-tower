@@ -1,0 +1,21 @@
+nav {
+  width: 100%;
+  background-color: #330000;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+main {
+  width: 95%;
+  height: 1000px;
+  background-color: #eeeeee;
+  margin: 0 auto;
+}
+
+.nav-links {
+  height: 5px;
+  width: 100%;
+  position: relative;
+  top: 75px;
+  background-color: #dd9427;
+}

@@ -8,7 +8,8 @@ let config = {
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 800, // game width
   height: 600, // game height
-  scene: gameScene // our newly created scene
+  scene: gameScene, // our newly created scene
+  parent: 'game'
 };
 
 // create the game, and pass it the configuration
@@ -129,7 +130,7 @@ refillGameMap(gamePlatforms, 8, 20);
 //////////////////////////////////////////// MAP CREATION BLOCK //////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-var gameArea = document.getElementsByClassName('game')[0];
+// var gameArea = document.getElementsByClassName('game')[0];
 
 function draw(){
   var drawingBoard = document.createElement('canvas');
