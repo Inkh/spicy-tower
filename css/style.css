@@ -92,16 +92,15 @@ h1{
   margin: 10px
 }
 
-
 .modal-content {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: 1rem 1.5rem;
-  width: 24rem;
-  border-radius: 0.5rem;
+  padding: 20px;
+  width: 34em;
+  border-radius: 0.5em;
 }
 
 .hide-modal {
@@ -125,17 +124,21 @@ h1{
 .modal-content label {
   margin: 10px;
   text-align: center;
+  font-family: 'Press Start 2P', cursive;
 }
 
 .modal-content input {
   display: block;
   margin: 10px;
+  font-family: 'Press Start 2P', cursive;
+  padding: 7px;
 }
 
 .modal-content button {
   display: block;
   margin: 10px;
 }
+
 #time {
   margin: 25px;
   color: orange;
@@ -146,7 +149,9 @@ h1 {
   font-size: 40px;
   font-family: 'Bungee Inline', cursive; 
   font-family: 'Bungee Shade', cursive;   
+  color: white;
 }
+
 h2 {
   font-family: 'Orbitron', sans-serif;
   font-size: 20px;

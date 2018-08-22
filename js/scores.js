@@ -86,7 +86,6 @@ function createEl(type, content = null, klass = null) {
 }
 
 // runner code
-// saveScore(t);
 triggerModal();
 attachEventListeners();
 
