@@ -120,16 +120,18 @@ gameScene.replay = function(){
 };
 
 gameScene.preload = function() {
-  this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
+  // this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
+  this.load.spritesheet('red', 'assets/red-ss.png', { frameWidth: 50, frameHeight: 50 });
+
 };
 
 //Global variable for key input
 var cursors;
-var sprite;
 var tile;
 var gameOver = false;
 var endGame;
+var player;
 
 gameScene.create = function() {
   const gameMap = refillGameMap(gamePlatforms, 8, 20);
@@ -150,49 +152,71 @@ gameScene.create = function() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
-        sprite = this.physics.add.sprite(795, 0, 'sprite');
-
+        player = this.physics.add.sprite(100, 450, 'red');
         //Set gravity to player sprite only
-        sprite.body.gravity.y = 500;
-
-        sprite.body.setSize(0, 500);
-        sprite.displayWidth = 30;
-        sprite.displayHeight = 40;
-        sprite.setCollideWorldBounds(true);
+        player.body.gravity.y = 500;
+        // sprite.body.setSize(0, 500);
+        // sprite.displayWidth = 30;
+        // sprite.displayHeight = 40;
+        player.setCollideWorldBounds(true);
       }
     }
   }
+  //Create main character sprite, and have collision
+  this.physics.add.collider(player, tile);
+  player.body.checkCollision.up = false;
+  player.body.checkCollision.down = true;
+  player.body.checkCollision.left = false;
+  player.body.checkCollision.right = false;
+
+  //Idle animation creation
+  this.anims.create({
+    key: 'idle',
+    frames: this.anims.generateFrameNumbers('red', { start: 1, end: 4 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  //Left
+  this.anims.create({
+    key: 'left',
+    frames: [ { key: 'red', frame: 0 } ],
+    frameRate: 20,
+  });
+
+  //Right
+  this.anims.create({
+    key: 'right',
+    frames: [ { key: 'red', frame: 5 } ],
+    frameRate: 10,
+  });
+
 
   //Once player overlaps with object, invoke ender function to end user input and game.
-  this.physics.add.overlap(sprite, endGame, ender, null, this);
-
-  sprite.setCollideWorldBounds(true);
-  sprite.body.checkCollision.up = false;
-  sprite.body.checkCollision.down = true;
-  sprite.body.checkCollision.left = false;
-  sprite.body.checkCollision.right = false;
-  this.physics.add.collider(sprite, tile);
+  this.physics.add.overlap(player, endGame, ender, null, this);
 };
 
 gameScene.update = function(){
   if (gameOver){
-    sprite.setVelocityX(0);
+    player.setVelocityX(0);
     return;
   }
 
   if (cursors.left.isDown){
-    sprite.setVelocityX(-160);
+    player.setVelocityX(-160);
+    player.anims.play('left', true);
 
   } else if (cursors.right.isDown) {
-    sprite.setVelocityX(160);
+    player.setVelocityX(160);
+    player.anims.play('right', true);
 
   } else {
-    sprite.setVelocityX(0);
-
+    player.setVelocityX(0);
+    player.anims.play('idle', true);
   }
 
-  if (cursors.up.isDown && sprite.body.touching.down) {
-    sprite.setVelocityY(-350);
+  if (cursors.up.isDown && player.body.touching.down) {
+    player.setVelocityY(-350);
   }
 };
 
@@ -201,9 +225,9 @@ function ender(){
   gameOver = true;
 
   //Double check that we're hitting this function.
-  sprite.setVelocityY(-500);
-  sprite.body.gravity.y = 0;
-  sprite.setCollideWorldBounds(false);
+  player.setVelocityY(-500);
+  player.body.gravity.y = 0;
+  player.setCollideWorldBounds(false);
   clearTimeout(t);
 
   setTimeout(function(){
