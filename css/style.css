@@ -40,7 +40,6 @@ nav li a {
   /* color: #2c1602; */
   color: #1b1b1b;
   text-decoration: none;
-  font-family: sans-serif;
   font-weight: bold;
   position: relative;
 }
@@ -128,6 +127,7 @@ h1{
   display: block;
   margin: 10px;
 }
+
 .modal-content button {
   display: block;
   margin: 10px;
