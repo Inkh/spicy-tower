@@ -202,15 +202,14 @@ function ender(){
   sprite.setVelocityY(-500);
   sprite.body.gravity.y = 0;
   sprite.setCollideWorldBounds(false);
-
+  setTimeout(function(){
+    window.location.href = '/scoreboard.html';
+  }, 1000);
 }
-
-// function restart(){
-//   this.scene.restart();
-// }
 
 var re = document.getElementById('restart');
 re.addEventListener('click', gameScene.replay);
+
 var h1 = document.getElementsByTagName('h1')[0];
 var start = document.getElementById('play');
 var tryagain = document.getElementById('tryagain');
