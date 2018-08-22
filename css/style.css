@@ -1,5 +1,7 @@
 body {
   background-color: #494949;
+ 
+   
 }
 
 nav {
@@ -84,15 +86,74 @@ main {
   text-align: center;
 }
 
+#time {
+  margin: 25px;
+  color: orange;
+}
 
 h1 {
   text-align: center;
-  font-size: 2em;
-  font-family: 'Bungee Inline', cursive;
- 
-  
+  font-size: 40px;
+  font-family: 'Bungee Inline', cursive; 
+  font-family: 'Bungee Shade', cursive;   
 }
-.ul-container {
-  display: flex
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  Margin: 10px;
 }
 
+h3 {
+  font-size:20px;
+  font-family: 'Bungee Inline', cursive;
+  color: #c73c25;
+}
+
+.about-us {
+  color: #c73c25;
+  padding: 20px;
+}
+
+
+.img-container {
+  /* display: flex; */
+  text-align: center;
+  width: 100%;
+  
+}
+
+img {
+  width: 200px;
+  border-radius: 50%;
+  margin: 50px;
+}
+
+div {
+  display: inline-block;
+  
+}
+
+.team-container {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+.team-story {
+  margin: 10px;
+  line-height: 25px;
+}
+
+.shiba {
+  position: absolute;
+  width: 120px;
+  top: 140px;
+  right: -30px;
+}
+
+#gumi {
+  position: relative;
+  height: 400px;
+  
+}
+
+
+  
