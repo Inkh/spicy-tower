@@ -8,10 +8,36 @@ function calculateScore(t) {
   return t * 10;
 }
 
-function saveScore(user, t) {
-  // add score to local storage scores
+// on submit save username and score to userScores in localStorage and toggle modal
+const handleSubmit = () => {
+
+};
+
+// display form asking user for name
+// save to local storage on submit
+function toggleModal() {
+  let user;
+  // debugger;
+  let modal = document.querySelector('.show-modal');
+  modal.classList.toggle('hide-modal');
+  // debugger;
+  // return saveScore(user);
+}
+
+// if high score, toggle class modal to show
+
+// detect score
+
+// toggle modal class to show
+
+
+function saveScore(user) {
+  // grab and parse last stored score in recent scores
+  const lastScore = JSON.parse(localStorage.getItem('recentScores'))[-1];
+
+  // add user score object to userScores array and save to local storage
   const userScores = [];
-  userScores.push({ user: user, score: calculateScore(t) });
+  userScores.push({ user: user, score: lastScore });
   localStorage.setItem('userScores', userScores);
 }
 
@@ -41,3 +67,11 @@ function createEl(type, content = null, klass = null) {
 
 // runner code
 // saveScore(t);
+toggleModal();
+// attachEventListeners();
+
+function attachEventListeners() {
+  if (shownForm) {
+    shownForm.addEventListener('click', () => handleSubmit());
+  }
+}

@@ -249,13 +249,5 @@ function saveScoreToLocalStorage(t) {
   let newScore = calculateScore(t);
   recentScores.push(newScore);
 
-  localStorage.setItem('scores', recentScores);
+  localStorage.setItem('recentScores', recentScores);
 }
-
-// function saveScore(t) {
-//   calculateScore(t);
-//   // add score to local storage scores
-//   const userScores = [];
-//   userScores.push({ user: user, score: calculateScore(timeInSec) });
-//   localStorage.setItem('userScores', userScores);
-// }
