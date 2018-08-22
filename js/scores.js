@@ -2,12 +2,6 @@
 
 console.log('the js is linked');
 
-// trigger when player finishes game
-// calculate high score by a multiplier
-function calculateScore(t) {
-  return t * 10;
-}
-
 // on submit save username and score to userScores in localStorage and toggle modal
 const handleSubmit = (e) => {
   e.preventDefault();
