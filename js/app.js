@@ -139,9 +139,9 @@ function create() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
-        sprite = this.physics.add.sprite(200, 100, 'sprite');
+        sprite = this.physics.add.sprite(200, 450, 'sprite');
         sprite.body.setSize(0, 500);
-        sprite.displayWidth = 40;
+        sprite.displayWidth = 30;
         sprite.displayHeight = 40;
       }
     }
