@@ -35,17 +35,6 @@ const handleSubmit = (e) => {
   isHighScore(5, user, lastScore);
 };
 
-// always display form asking user for name in order to persist to localStorage
-function toggleModal() {
-  let user;
-
-  // save to local storage on submit then hide modal
-
-  // modal.classList.toggle('hide-modal');
-
-  // return saveScore(user);
-}
-
 // detect if high score is within top N scores
 function isHighScore(topN, user, newScore) {
   let userScores;
