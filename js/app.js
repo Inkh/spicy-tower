@@ -122,7 +122,7 @@ gameScene.replay = function(){
 gameScene.preload = function() {
   this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
-}
+};
 
 //Global variable for key input
 var cursors;
@@ -150,11 +150,13 @@ gameScene.create = function() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
+
         sprite = this.physics.add.sprite(200, 100, 'sprite');
         //Set gravity to player sprite only
         sprite.body.gravity.y = 500;
+
         sprite.body.setSize(0, 500);
-        sprite.displayWidth = 40;
+        sprite.displayWidth = 30;
         sprite.displayHeight = 40;
         sprite.setCollideWorldBounds(true);
       }
@@ -226,12 +228,12 @@ function timer(){
   t = setTimeout(addTime, 1000);
 }
 
-document.addEventListener("keydown", startGame);
+document.addEventListener('keydown', startGame);
 
 function startGame(){
   if(event.which){
     console.log(event.which);
     timer();
-    document.removeEventListener("keydown", startGame);
+    document.removeEventListener('keydown', startGame);
   }
 }
