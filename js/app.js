@@ -46,7 +46,7 @@ function populateGameMap(col, row) {
 }
 
 // Platform object constructor function
-function Platform(x, y, width = 2, val = 1) {
+function Platform(x, y, width, val = 1) {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -70,29 +70,52 @@ Platform.prototype.generatePlatform = function(n) {
 // Generate platform objects to repopulate game array with data
 var ground = new Platform(0, 0, 8, 1);
 var spriteIndex = new Platform(2, 2, 1, 2);
-var one = new Platform(4, 3);
-var two = new Platform(1, 5);
-var three = new Platform(4, 7);
-var four = new Platform(2, 9);
-var five = new Platform(5, 11);
-var six = new Platform(3, 13);
-var seven = new Platform(0, 15);
-var eight = new Platform(4, 17);
+// var one = new Platform(4, 3);
+// var two = new Platform(1, 5);
+// var three = new Platform(4, 7);
+// var four = new Platform(2, 9);
+// var five = new Platform(5, 11);
+// var six = new Platform(3, 13);
+// var seven = new Platform(0, 15);
+// var eight = new Platform(4, 17);
 
 // Make array of game platform objects to iterate over and call prototype method
 var gamePlatforms = [
   ground,
   spriteIndex,
-  one,
-  two,
-  three,
-  four,
-  five,
-  six,
-  seven,
-  eight
+  // one,
+  // two,
+  // three,
+  // four,
+  // five,
+  // six,
+  // seven,
+  // eight
 ];
 
+var numPlatforms = 8;
+function generatePlatform(){ // Generates platforms; 
+  for (var i = 2; i < numPlatforms+2; i++){
+    var y = gamePlatforms[i-1].y + 2;
+    var xPrev = gamePlatforms[i-1].x;
+    var x = generateRandomXCoord(0,7, xPrev);
+    var w = generateRandomXCoord(1,3,0);
+
+    gamePlatforms[i] = new Platform(x,y,w);
+  }
+}
+
+function generateRandomXCoord(xMin, xMax, xPrev){
+  do{
+    var min = Math.ceil(xMin);
+    var max = Math.floor(xMax);
+    var xNew = Math.floor(Math.random() * (max - min)) + min;
+
+  }while((xNew === xPrev) || (Math.abs(xNew-xPrev) > 3));
+  return xNew;
+}
+
+generatePlatform();
 // sprite starts at row 2, which is .length-2 in the 2D array
 // for every even row >= .length-4, create new Platform object
 // invoke prototype method to turn Platform object into an array of 0's and 1's
