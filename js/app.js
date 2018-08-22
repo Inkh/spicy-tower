@@ -205,9 +205,9 @@ function ender(){
   sprite.body.gravity.y = 0;
   sprite.setCollideWorldBounds(false);
   clearTimeout(t);
-  saveScoreToLocalStorage(t);
 
   setTimeout(function(){
+    saveScoreToLocalStorage([], t);
     window.location.href = '/scoreboard.html';
   }, 1000);
 }
@@ -245,10 +245,11 @@ function calculateScore(timeInSec) {
   return timeInSec * 10;
 }
 
-function saveScoreToLocalStorage(t) {
-  const recentScores = [];
+function saveScoreToLocalStorage(arr, t) {
+  debugger;
   let newScore = calculateScore(t);
-  recentScores.push(newScore);
+  arr.push(newScore);
+  debugger;
 
-  localStorage.setItem('recentScores', recentScores);
+  localStorage.setItem('recentScores', arr);
 }
