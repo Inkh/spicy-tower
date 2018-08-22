@@ -249,4 +249,5 @@ function calculateScore(timeInSec) {
 function saveScoreToLocalStorage(t) {
   let newScore = calculateScore(t);
   localStorage.setItem('recentScore', JSON.stringify(newScore));
+  localStorage.setItem('gameOver', JSON.stringify(true));
 }

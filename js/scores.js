@@ -2,20 +2,35 @@
 
 console.log('the js is linked');
 
+function triggerModal() {
+  let modal = document.querySelector('.hide-modal');
+
+  if (localStorage.getItem('gameOver') === 'true') {
+    // set modal display to visible
+    modal.classList.remove('hide-modal');
+    modal.classList.add('show-modal');
+  } else {
+    modal.classList.remove('show-modal');
+    modal.classList.add('hide-modal');
+  }
+}
+
 // on submit save username and score to userScores in localStorage and toggle modal
 const handleSubmit = (e) => {
   // prevent the default action
   e.preventDefault();
-  let modal = document.querySelector('.show-modal');
-  // debugger;
-  // set modal display to hidden
-  modal.classList.toggle('hide-modal');
-  // console.log('we get here');
 
   // grab the user's input from event object form input
   const user = e.target.getElementsByTagName('input')[0].value;
   // grab last saved score from recentScores in localStorage
   const lastScore = JSON.parse(localStorage.getItem('recentScore'));
+  // reset game over in local storage to prevent showing modal on page by default
+  localStorage.setItem('gameOver', JSON.stringify(false));
+  if (localStorage.getItem('gameOver') === 'false') {
+    let modal = document.querySelector('.show-modal');
+    modal.classList.remove('show-modal');
+    modal.classList.add('hide-modal');
+  }
   // trigger function to assess if new score is a high score in top 5 userScores
   isHighScore(5, user, lastScore);
 };
@@ -83,7 +98,7 @@ function createEl(type, content = null, klass = null) {
 
 // runner code
 // saveScore(t);
-toggleModal();
+triggerModal();
 attachEventListeners();
 
 function attachEventListeners() {
