@@ -84,9 +84,10 @@ main {
   text-align: center;
 }
 
+
 h1 {
   text-align: center;
-  font-size: 5em;
+  font-size: 2em;
   font-family: 'Bungee Inline', cursive;
  
   
@@ -94,3 +95,4 @@ h1 {
 .ul-container {
   display: flex
 }
+
