@@ -40,4 +40,4 @@ function createEl(type, content = null, klass = null) {
 }
 
 // runner code
-saveScore(user, timeInSec);
+// saveScore(t);

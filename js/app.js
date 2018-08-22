@@ -203,14 +203,15 @@ function ender(){
   sprite.body.gravity.y = 0;
   sprite.setCollideWorldBounds(false);
   clearTimeout(t);
+  saveScoreToLocalStorage(t);
+  setTimeout(function(){
+    window.location.href = '/scoreboard.html';
+  }, 1000);
 }
-
-// function restart(){
-//   this.scene.restart();
-// }
 
 var re = document.getElementById('restart');
 re.addEventListener('click', gameScene.replay);
+
 var h1 = document.getElementsByTagName('h1')[0];
 var start = document.getElementById('play');
 var tryagain = document.getElementById('tryagain');
@@ -237,13 +238,22 @@ function startGame(){
   }
 }
 
-// // trigger when player finishes game
-// // calculate high score by a multiplier
-// function calculateScore(timeInSec) {
-//   return timeInSec * 10;
-// }
+// trigger when player finishes game
+// calculate high score by a multiplier
+function calculateScore(timeInSec) {
+  return timeInSec * 10;
+}
+
+function saveScoreToLocalStorage(t) {
+  const recentScores = [];
+  let newScore = calculateScore(t);
+  recentScores.push(newScore);
+
+  localStorage.setItem('scores', recentScores);
+}
 
 // function saveScore(t) {
+//   calculateScore(t);
 //   // add score to local storage scores
 //   const userScores = [];
 //   userScores.push({ user: user, score: calculateScore(timeInSec) });
