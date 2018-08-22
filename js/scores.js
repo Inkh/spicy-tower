@@ -9,16 +9,21 @@ function calculateScore(t) {
 }
 
 // on submit save username and score to userScores in localStorage and toggle modal
-const handleSubmit = () => {
+const handleSubmit = (e) => {
+  e.preventDefault();
 
+  console.log('we get here');
 };
 
-// always display form asking user for name to persist to localStorage
+// always display form asking user for name in order to persist to localStorage
 function toggleModal() {
   let user;
   let modal = document.querySelector('.show-modal');
+
+  // save to local storage on submit then hide modal
+
   modal.classList.toggle('hide-modal');
-  // save to local storage on submit
+
   // return saveScore(user);
 }
 
@@ -28,7 +33,7 @@ function isHighScore(topN, user, newScore) {
 
   for (let i = 0; i < topN; i++) {
     if (userScores[i].score < newScore) {
-      // insert newScore into specific index i in native array, while deleting 0 items
+      // insert user and newScore into specific index i in native array, while deleting 0 items
       userScores.splice(i, 0, { user: user, score: newScore });
     }
   }
@@ -64,10 +69,12 @@ function createEl(type, content = null, klass = null) {
 // runner code
 // saveScore(t);
 toggleModal();
-// attachEventListeners();
+attachEventListeners();
 
 function attachEventListeners() {
+  const shownForm = document.querySelector('form');
+
   if (shownForm) {
-    shownForm.addEventListener('click', () => handleSubmit());
+    shownForm.addEventListener('submit', (e) => handleSubmit(e));
   }
 }
