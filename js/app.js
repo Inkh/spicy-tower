@@ -122,7 +122,7 @@ gameScene.replay = function(){
 gameScene.preload = function() {
   this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
-}
+};
 
 //Global variable for key input
 var cursors;
@@ -202,7 +202,7 @@ function ender(){
   sprite.setVelocityY(-500);
   sprite.body.gravity.y = 0;
   sprite.setCollideWorldBounds(false);
-
+  clearTimeout(t);
 }
 
 // function restart(){
@@ -227,12 +227,25 @@ function timer(){
   t = setTimeout(addTime, 1000);
 }
 
-document.addEventListener("keydown", startGame);
+document.addEventListener('keydown', startGame);
 
 function startGame(){
   if(event.which){
     console.log(event.which);
     timer();
-    document.removeEventListener("keydown", startGame);
+    document.removeEventListener('keydown', startGame);
   }
 }
+
+// // trigger when player finishes game
+// // calculate high score by a multiplier
+// function calculateScore(timeInSec) {
+//   return timeInSec * 10;
+// }
+
+// function saveScore(t) {
+//   // add score to local storage scores
+//   const userScores = [];
+//   userScores.push({ user: user, score: calculateScore(timeInSec) });
+//   localStorage.setItem('userScores', userScores);
+// }
