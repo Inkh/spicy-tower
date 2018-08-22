@@ -150,8 +150,8 @@ gameScene.create = function() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
+        sprite = this.physics.add.sprite(795, 0, 'sprite');
 
-        sprite = this.physics.add.sprite(200, 100, 'sprite');
         //Set gravity to player sprite only
         sprite.body.gravity.y = 500;
 
@@ -204,6 +204,8 @@ function ender(){
   sprite.setVelocityY(-500);
   sprite.body.gravity.y = 0;
   sprite.setCollideWorldBounds(false);
+  clearTimeout(t);
+  
   setTimeout(function(){
     window.location.href = '/scoreboard.html';
   }, 1000);
@@ -213,8 +215,6 @@ var re = document.getElementById('restart');
 re.addEventListener('click', gameScene.replay);
 
 var h1 = document.getElementsByTagName('h1')[0];
-var start = document.getElementById('play');
-var tryagain = document.getElementById('tryagain');
 var seconds = 0;
 var t;
 
