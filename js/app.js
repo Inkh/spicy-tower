@@ -205,8 +205,9 @@ function ender(){
   sprite.body.gravity.y = 0;
   sprite.setCollideWorldBounds(false);
   clearTimeout(t);
-  
+
   setTimeout(function(){
+    saveScoreToLocalStorage(t);
     window.location.href = '/scoreboard.html';
   }, 1000);
 }
@@ -236,4 +237,17 @@ function startGame(){
     timer();
     document.removeEventListener('keydown', startGame);
   }
+}
+
+// trigger when player finishes game
+// calculate high score by a multiplier
+function calculateScore(timeInSec) {
+  return Math.floor((100000 - timeInSec) * .2);
+}
+
+// why won't this create an array and save to local storage?
+function saveScoreToLocalStorage(t) {
+  let newScore = calculateScore(t);
+  localStorage.setItem('recentScore', JSON.stringify(newScore));
+  localStorage.setItem('gameOver', JSON.stringify(true));
 }
