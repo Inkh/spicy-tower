@@ -85,7 +85,6 @@ main {
   text-align: center;
 }
 
-<<<<<<< HEAD
 h1{
   text-align: center;
   font-family: sans-serif;
@@ -106,16 +105,16 @@ h1{
 }
 
 .hide-modal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
   opacity: 0;
   visibility: hidden;
 }
 
 .show-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   opacity: 1;
   visibility: visible;
   transform: scale(1.0);
@@ -136,7 +135,6 @@ h1{
   display: block;
   margin: 10px;
 }
-=======
 #time {
   margin: 25px;
   color: orange;
@@ -208,4 +206,3 @@ div {
 
 
   
->>>>>>> master
