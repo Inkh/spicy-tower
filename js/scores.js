@@ -13,32 +13,28 @@ const handleSubmit = () => {
 
 };
 
-// display form asking user for name
-// save to local storage on submit
+// always display form asking user for name to persist to localStorage
 function toggleModal() {
   let user;
-  // debugger;
   let modal = document.querySelector('.show-modal');
   modal.classList.toggle('hide-modal');
-  // debugger;
+  // save to local storage on submit
   // return saveScore(user);
 }
 
-// if high score, toggle class modal to show
+// detect if high score is within top N scores
+function isHighScore(topN, user, newScore) {
+  const userScores = JSON.parse(localStorage.getItem('userScores'));
 
-// detect score
+  for (let i = 0; i < topN; i++) {
+    if (userScores[i].score < newScore) {
+      // insert newScore into specific index i in native array, while deleting 0 items
+      userScores.splice(i, 0, { user: user, score: newScore });
+    }
+  }
 
-// toggle modal class to show
-
-
-function saveScore(user) {
-  // grab and parse last stored score in recent scores
-  const lastScore = JSON.parse(localStorage.getItem('recentScores'))[-1];
-
-  // add user score object to userScores array and save to local storage
-  const userScores = [];
-  userScores.push({ user: user, score: lastScore });
-  localStorage.setItem('userScores', userScores);
+  // reset descending userScores in local storage to include new high score
+  localStorage.setItem('userScores', sortScores(userScores));
 }
 
 // accepts JSON parsed user scores as a paramater
