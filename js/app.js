@@ -155,7 +155,6 @@ gameScene.create = function() {
         player = this.physics.add.sprite(100, 450, 'red');
         //Set gravity to player sprite only
         player.body.gravity.y = 500;
-
         // sprite.body.setSize(0, 500);
         // sprite.displayWidth = 30;
         // sprite.displayHeight = 40;
@@ -192,36 +191,9 @@ gameScene.create = function() {
     frameRate: 10,
   });
 
-  //Sample code
-  // this.anims.create({
-  //   key: 'left',
-  //   frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-  //   frameRate: 10,
-  //   repeat: -1
-  // });
-
-  // this.anims.create({
-  //   key: 'turn',
-  //   frames: [ { key: 'dude', frame: 4 } ],
-  //   frameRate: 20
-  // });
-
-  // this.anims.create({
-  //   key: 'right',
-  //   frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-  //   frameRate: 10,
-  //   repeat: -1
-  // });
 
   //Once player overlaps with object, invoke ender function to end user input and game.
   this.physics.add.overlap(player, endGame, ender, null, this);
-
-  // sprite.setCollideWorldBounds(true);
-  // sprite.body.checkCollision.up = false;
-  // sprite.body.checkCollision.down = true;
-  // sprite.body.checkCollision.left = false;
-  // sprite.body.checkCollision.right = false;
-  // this.physics.add.collider(sprite, tile);
 };
 
 gameScene.update = function(){
