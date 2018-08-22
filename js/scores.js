@@ -15,7 +15,7 @@ const handleSubmit = (e) => {
   // grab the user's input from event object form input
   const user = e.target.getElementsByTagName('input')[0].value;
   // grab last saved score from recentScores in localStorage
-  const lastScore = JSON.parse(localStorage.getItem('recentScores'));
+  const lastScore = JSON.parse(localStorage.getItem('recentScore'));
   // trigger function to assess if new score is a high score in top 5 userScores
   isHighScore(5, user, lastScore);
 };
