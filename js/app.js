@@ -45,10 +45,10 @@ function populateGameMap(col, row) {
 
 // Platform object constructor function
 function Platform(x, y, width, val = 1) {
-  this.x = x;
-  this.y = y;
-  this.width = width;
-  this.val = val;
+  this.x = x; // the first column the object occupies
+  this.y = y; // the first row the object occupies
+  this.width = width; // the number of columns the object occupies
+  this.val = val; // the objects corresponding sprite skinning
 }
 
 // Prototype method to turn platform object into an array of usable data
@@ -65,37 +65,24 @@ Platform.prototype.generatePlatform = function(n) {
   return mappedObject;
 };
 
-// Generate platform objects to repopulate game array with data
-var ground = new Platform(0, 0, 8, 1);
-var spriteIndex = new Platform(2, 2, 1, 2);
-// var one = new Platform(4, 3);
-// var two = new Platform(1, 5);
-// var three = new Platform(4, 7);
-// var four = new Platform(2, 9);
-// var five = new Platform(5, 11);
-// var six = new Platform(3, 13);
-// var seven = new Platform(0, 15);
-// var eight = new Platform(4, 17);
-
 // Make array of game platform objects to iterate over and call prototype method
-var gamePlatforms = [
-  ground,
-  spriteIndex,
-  // one,
-  // two,
-  // three,
-  // four,
-  // five,
-  // six,
-  // seven,
-  // eight
-];
-
-var numPlatforms = 8;
+var gamePlatforms = []; // This array variable holds all the platforms
+var numPlatforms = 7; // This variable specifies the number of platforms the game creates
+var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
+var numRows = 20; // This variable specifies the number of vertical boxes the game creates
 var endGame;
 
-function generatePlatform(){ // Generates platforms;
-  for (var i = 2; i < numPlatforms+2; i++){
+
+// This function generates x & y coordinates and widths for the ground and platforms,
+// constructs them using the Platform constructor, and then stores them in the gamePlatform array
+function generatePlatform(){
+  var ground = new Platform(0, 0, numColumns, 1);
+  var spriteIndex = new Platform(2, 2, 1, 2);
+
+  gamePlatforms.push(ground);
+  gamePlatforms.push(spriteIndex);
+
+  for (var i = 2; i < numPlatforms + 2; i++){
     var y = gamePlatforms[i-1].y + 2;
     var xPrev = gamePlatforms[i-1].x;
     var w = generateRandomXCoord(1, 3);
@@ -135,7 +122,7 @@ function refillGameMap(gamePlatforms, col, row) {
   // initialize gameMap and assign with a 2D array filled with 0's
   let gameMap = populateGameMap(col, row);
   // hard code ground in game map array
-  gameMap[gameMap.length-1] = gamePlatforms[gamePlatforms.indexOf(ground)].generatePlatform(8);
+  gameMap[gameMap.length-1] = gamePlatforms[0].generatePlatform(col); // ground platform is always the first element in the gamePlatforma array
 
   for (var i = gameMap.length - 2; i >= 2; i -= 2) {
     if (gamePlatforms[j]) {
@@ -161,11 +148,10 @@ gameScene.preload = function() {
 var cursors;
 var tile;
 var gameOver = false;
-var endGame;
 var player;
 
 gameScene.create = function() {
-  const gameMap = refillGameMap(generatePlatform(), 8, 20);
+  const gameMap = refillGameMap(generatePlatform(), numColumns, numRows);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
 
@@ -174,7 +160,7 @@ gameScene.create = function() {
   var endY = gamePlatforms.slice(-1)[0].y;
   console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
-  endGame.create((endX*120), (30), 'tile');
+  endGame.create((endX*120), ((numRows-endY-1)*30), 'tile');
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -196,6 +182,7 @@ gameScene.create = function() {
       }
     }
   }
+
   //Create main character sprite, and have collision
   this.physics.add.collider(player, tile);
   player.body.checkCollision.up = false;
