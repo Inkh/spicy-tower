@@ -166,6 +166,8 @@ td, th {
   margin: 25px;
   color: orange;
   display: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5em;
 }
 
 h1 {
