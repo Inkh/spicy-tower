@@ -202,8 +202,6 @@ gameScene.create = function() {
   player.body.checkCollision.left = false;
   player.body.checkCollision.right = false;
 
-  var lookingRight = true;
-
   // Idle animation creation
   this.anims.create({
     key: 'idle',
@@ -317,7 +315,7 @@ function ender(){
 // var re = document.getElementById('restart');
 // re.addEventListener('click', gameScene.replay);
 
-var h1 = document.getElementsByTagName('h1')[0];
+var h1 = document.querySelector('#time');
 var seconds = 0;
 var t;
 
@@ -334,6 +332,11 @@ function timer(){
 document.addEventListener('keydown', startGame);
 
 function startGame(){
+  // change canvas to visible & .game-instructions div to hidden
+  document.getElementsByTagName('canvas')[0].style.display = 'block';
+  document.querySelector('.game-instructions').style.display = 'none';
+  document.querySelector('#time').style.display = 'block';
+
   if(event.which){
     timer();
     musicPlayer();
