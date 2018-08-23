@@ -302,7 +302,7 @@ function startGame(){
 // trigger when player finishes game
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
-  return Math.floor((100000 - timeInSec) * .2);
+  return Math.floor((10000 - timeInSec) * .2);
   // return timeInSec;
 }
 
