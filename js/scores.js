@@ -95,4 +95,12 @@ function attachEventListeners() {
   if (shownForm) {
     shownForm.addEventListener('submit', (e) => handleSubmit(e));
   }
+
+  document.body.addEventListener('keyup', (e) => {
+    let pressed = e.keyCode;
+    if (pressed === 27) {
+      localStorage.setItem('gameOver', 'false');
+      window.location.href = '/scoreboard.html';
+    }
+  });
 }
