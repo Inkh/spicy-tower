@@ -305,7 +305,18 @@ document.addEventListener('keydown', startGame);
 function startGame(){
   if(event.which){
     timer();
-    document.getElementById('music').play();
+    var playMusic = document.getElementById('music').play();
+
+    // document.getElementById('music').play();
+    if (playMusic !== undefined) {
+      playMusic.then(function() {
+        // Automatic playback started!
+        console.log('playing')
+      }).catch(function(error) {
+        // Automatic playback failed.
+        console.log(error);
+      });
+    }
     document.removeEventListener('keydown', startGame);
   }
 }
