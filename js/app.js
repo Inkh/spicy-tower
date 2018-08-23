@@ -311,7 +311,7 @@ function startGame(){
     if (playMusic !== undefined) {
       playMusic.then(function() {
         // Automatic playback started!
-        console.log('playing')
+        console.log('playing');
       }).catch(function(error) {
         // Automatic playback failed.
         console.log(error);
