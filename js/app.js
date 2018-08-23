@@ -29,7 +29,7 @@ let config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: false
+      debug: true
     }
   },
   parent: 'game'
@@ -154,6 +154,11 @@ gameScene.create = function() {
   endGame = this.physics.add.staticGroup();
   // endGame.create((endX*120), ((numRows-endY-1)*30), 'lava');
   endGame = this.physics.add.sprite((endX*120), ((numRows-endY-1)*30), 'lava');
+  endGame.displayWidth = 50;
+  endGame.displayHeight = 150;
+  endGame.displayOriginY = 40;
+  endGame.body.setSize(30,35, false);
+
 
   for (var k = 3; k < numPlatforms + 2; k++){
     var coinX = gamePlatforms.slice(k-1)[0].x;
@@ -175,7 +180,7 @@ gameScene.create = function() {
         player = this.physics.add.sprite(100, 450, 'red');
         //Set gravity to player sprite only
         player.body.gravity.y = 500;
-        // sprite.body.setSize(0, 500);
+        player.body.setSize(25, 50);
         // sprite.displayWidth = 30;
         // sprite.displayHeight = 40;
         player.setCollideWorldBounds(true);
