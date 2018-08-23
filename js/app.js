@@ -9,6 +9,8 @@ var numPlatforms = 7; // This variable specifies the number of platforms the gam
 var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
 var numRows = 20; // This variable specifies the number of vertical boxes the game creates
 var endGame;
+// var coins = [];
+var coins;
 
 //Global variable for key input
 var cursors;
@@ -149,6 +151,13 @@ gameScene.create = function() {
   console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
   endGame.create((endX*120), ((numRows-endY-1)*30), 'tile');
+
+  for (var k = 3; k < numPlatforms + 2; k++){
+    coins = this.physics.add.staticGroup();
+    var coinX = gamePlatforms.slice(k-1)[0].x;
+    var coinY = gamePlatforms.slice(k-1)[0].y;
+    coins.create(((coinX*120)+15), ((numRows-coinY-1)*30), 'red');
+  }
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
