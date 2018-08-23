@@ -9,6 +9,9 @@ var numPlatforms = 7; // This variable specifies the number of platforms the gam
 var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
 var numRows = 20; // This variable specifies the number of vertical boxes the game creates
 var endGame;
+var coins = [];
+// var coins;
+var coinPointTotal = 0;
 
 //Global variable for key input
 var cursors;
@@ -135,6 +138,7 @@ gameScene.replay = function(){
 gameScene.preload = function() {
   this.load.image('tile', 'assets/15-01.png');
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
+  this.load.image('coin', 'assets/coin2.png'); //{ frameWidth: 50, frameHeight: 50 });
   this.load.spritesheet('lava', 'assets/lava-fall.png', { frameWidth: 50, frameHeight: 50 });
 };
 
@@ -150,6 +154,13 @@ gameScene.create = function() {
   endGame = this.physics.add.staticGroup();
   // endGame.create((endX*120), ((numRows-endY-1)*30), 'lava');
   endGame = this.physics.add.sprite((endX*120), ((numRows-endY-1)*30), 'lava');
+
+  for (var k = 3; k < numPlatforms + 2; k++){
+    var coinX = gamePlatforms.slice(k-1)[0].x;
+    var coinY = gamePlatforms.slice(k-1)[0].y;
+    coins[k]= this.physics.add.sprite(((coinX*120)-15), ((numRows-coinY-1)*30), 'coin');
+    // coins[k].body.gravity.y = 500;
+  }
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -230,6 +241,12 @@ gameScene.create = function() {
 
 
   // Once player overlaps with object, invoke ender function to end user input and game.
+  var me = this;
+  coins.forEach(function(coin, index){
+    me.physics.add.overlap(player, coin, function(){collectCoin(coin);}, null, me);
+  });
+ 
+
   this.physics.add.overlap(player, endGame, ender, null, this);
 };
 
@@ -266,6 +283,15 @@ gameScene.update = function(){
     player.setVelocityY(-350);
   }
 };
+
+function collectCoin(coin){
+  coin.setVelocityY(-500);
+  coin.body.gravity.y = 0;
+  coin.setCollideWorldBounds(false);
+  // coins.disableBody(true, true);
+  coinPointTotal += 100;
+  console.log(coinPointTotal);
+}
 
 // Function that gets called when player sprite collides with  endGame object.
 function ender(){
