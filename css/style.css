@@ -74,10 +74,10 @@ nav li a:hover:before {
 }
 
 main {
-  width: 97%;
   height: auto;
   background-color: #eeeeee;
   margin: 0 auto;
+  width: 98%;
 }
 
 #game {
@@ -271,7 +271,7 @@ hr {
   background-color: rgba(0, 0, 0, .8);
   border: 10px solid rgba(255, 0, 0, 0.6);
   text-align: center;
-  display: inline-block;
+  margin: 0 auto;
 }
 
 .game-instructions h1 {
@@ -298,7 +298,6 @@ hr {
 }
 
 canvas {
-  /* visibility: hidden; */
   display: none;
   margin: 0 auto;
 }
