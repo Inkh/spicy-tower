@@ -139,6 +139,7 @@ gameScene.preload = function() {
   this.load.image('tile', 'assets/15-01.png');
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
   this.load.image('coin', 'assets/coin2.png'); //{ frameWidth: 50, frameHeight: 50 });
+  this.load.spritesheet('lava', 'assets/lava-fall.png', { frameWidth: 50, frameHeight: 50 });
 };
 
 gameScene.create = function() {
@@ -151,7 +152,8 @@ gameScene.create = function() {
   var endY = gamePlatforms.slice(-1)[0].y;
   console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
-  endGame.create((endX*120), ((numRows-endY-1)*30), 'tile');
+  // endGame.create((endX*120), ((numRows-endY-1)*30), 'lava');
+  endGame = this.physics.add.sprite((endX*120), ((numRows-endY-1)*30), 'lava');
 
   for (var k = 3; k < numPlatforms + 2; k++){
     var coinX = gamePlatforms.slice(k-1)[0].x;
@@ -180,6 +182,13 @@ gameScene.create = function() {
       }
     }
   }
+  //Lava sprite sheet animation
+  this.anims.create({
+    key: 'pour',
+    frames: this.anims.generateFrameNumbers('lava', { start: 0, end: 2 }),
+    frameRate: 10,
+    repeat: -1
+  });
 
   // Create main character sprite, and have collision
   this.physics.add.collider(player, tile);
@@ -187,6 +196,8 @@ gameScene.create = function() {
   player.body.checkCollision.down = true;
   player.body.checkCollision.left = false;
   player.body.checkCollision.right = false;
+
+  var lookingRight = true;
 
   // Idle animation creation
   this.anims.create({
@@ -240,6 +251,8 @@ gameScene.create = function() {
 };
 
 gameScene.update = function(){
+  endGame.anims.play('pour', true);
+
   if (gameOver){
     player.setVelocityX(0);
     return;
@@ -296,8 +309,8 @@ function ender(){
   }, 1000);
 }
 
-var re = document.getElementById('restart');
-re.addEventListener('click', gameScene.replay);
+// var re = document.getElementById('restart');
+// re.addEventListener('click', gameScene.replay);
 
 var h1 = document.getElementsByTagName('h1')[0];
 var seconds = 0;
@@ -318,14 +331,33 @@ document.addEventListener('keydown', startGame);
 function startGame(){
   if(event.which){
     timer();
+    musicPlayer();
     document.removeEventListener('keydown', startGame);
   }
+}
+
+function musicPlayer(){
+  var fileFinder = new XMLHttpRequest();
+  var musicPath = '/spicy-tower/music/spicy-tower.mp3';
+  var deployPath = '/music/spicy-tower.mp3';
+  var playMusic = document.getElementById('music');
+
+  fileFinder.open('HEAD', musicPath, true);
+  fileFinder.send();
+  if (fileFinder.status === 404){
+    playMusic.src = deployPath;
+  } else {
+    playMusic.src = musicPath;
+  }
+  playMusic.play();
+
+
 }
 
 // trigger when player finishes game
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
-  return Math.floor((100000 - timeInSec) * .2);
+  return Math.floor((10000 - timeInSec) * .2);
   // return timeInSec;
 }
 
