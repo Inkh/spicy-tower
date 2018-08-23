@@ -22,7 +22,7 @@ let config = {
     default: 'arcade',
     arcade: {
       // gravity: { y: 500}, // include gravity
-      debug: true
+      debug: false
     }
   },
   parent: 'game'
@@ -36,17 +36,15 @@ var gameMap = [];
 
 // dynamically generate 2D array with subarrays of 0's
 function populateGameMap(col, row) {
-  var sub = new Array(col).fill(0);
-
   for (var i = 0; i < row; i++) {
-    gameMap.push(sub);
+    gameMap.push(new Array(col).fill(0));
   }
 
   return gameMap;
 }
 
 // Platform object constructor function
-function Platform(x, y, width = 2, val = 1) {
+function Platform(x, y, width, val = 1) {
   this.x = x;
   this.y = y;
   this.width = width;
@@ -70,28 +68,61 @@ Platform.prototype.generatePlatform = function(n) {
 // Generate platform objects to repopulate game array with data
 var ground = new Platform(0, 0, 8, 1);
 var spriteIndex = new Platform(2, 2, 1, 2);
-var one = new Platform(4, 3);
-var two = new Platform(1, 5);
-var three = new Platform(4, 7);
-var four = new Platform(2, 9);
-var five = new Platform(5, 11);
-var six = new Platform(3, 13);
-var seven = new Platform(0, 15);
-var eight = new Platform(4, 17);
+// var one = new Platform(4, 3);
+// var two = new Platform(1, 5);
+// var three = new Platform(4, 7);
+// var four = new Platform(2, 9);
+// var five = new Platform(5, 11);
+// var six = new Platform(3, 13);
+// var seven = new Platform(0, 15);
+// var eight = new Platform(4, 17);
 
 // Make array of game platform objects to iterate over and call prototype method
 var gamePlatforms = [
   ground,
   spriteIndex,
-  one,
-  two,
-  three,
-  four,
-  five,
-  six,
-  seven,
-  eight
+  // one,
+  // two,
+  // three,
+  // four,
+  // five,
+  // six,
+  // seven,
+  // eight
 ];
+
+var numPlatforms = 8;
+var endGame;
+
+function generatePlatform(){ // Generates platforms; 
+  for (var i = 2; i < numPlatforms+2; i++){
+    var y = gamePlatforms[i-1].y + 2;
+    var xPrev = gamePlatforms[i-1].x;
+    var w = generateRandomXCoord(1, 3);
+    var x = generateRandomXCoord(0, 7, xPrev, w);
+
+    gamePlatforms[i] = new Platform(x,y,w);
+  }
+
+  return gamePlatforms;
+}
+
+function generateRandomXCoord(xMin, xMax, xPrev, platWidth){
+  do{
+    var min = Math.ceil(xMin);
+    var max = Math.floor(xMax);
+    var xNew = Math.floor(Math.random() * (max - min)) + min;
+    var maxSpace;
+
+    if(platWidth === 1){
+      maxSpace = 2;
+    } else{
+      maxSpace = 3;
+    }
+  }while((xNew === xPrev) || (Math.abs(xNew-xPrev) > maxSpace));
+
+  return xNew;
+}
 
 // sprite starts at row 2, which is .length-2 in the 2D array
 // for every even row >= .length-4, create new Platform object
@@ -120,25 +151,30 @@ gameScene.replay = function(){
 };
 
 gameScene.preload = function() {
-  this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
+  // this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
+  this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
+
 };
 
 //Global variable for key input
 var cursors;
-var sprite;
 var tile;
 var gameOver = false;
 var endGame;
+var player;
 
 gameScene.create = function() {
-  const gameMap = refillGameMap(gamePlatforms, 8, 20);
+  const gameMap = refillGameMap(generatePlatform(), 8, 20);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
 
   //Endgame object creation. Place on page is temporary.
+  var endX = gamePlatforms.slice(-1)[0].x;
+  var endY = gamePlatforms.slice(-1)[0].y;
+  console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
-  endGame.create(50, 70, 'tile');
+  endGame.create((endX*120), (30), 'tile');
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -150,49 +186,97 @@ gameScene.create = function() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
-        sprite = this.physics.add.sprite(795, 0, 'sprite');
-
+        player = this.physics.add.sprite(100, 450, 'red');
         //Set gravity to player sprite only
-        sprite.body.gravity.y = 500;
-
-        sprite.body.setSize(0, 500);
-        sprite.displayWidth = 30;
-        sprite.displayHeight = 40;
-        sprite.setCollideWorldBounds(true);
+        player.body.gravity.y = 500;
+        // sprite.body.setSize(0, 500);
+        // sprite.displayWidth = 30;
+        // sprite.displayHeight = 40;
+        player.setCollideWorldBounds(true);
       }
     }
   }
+  //Create main character sprite, and have collision
+  this.physics.add.collider(player, tile);
+  player.body.checkCollision.up = false;
+  player.body.checkCollision.down = true;
+  player.body.checkCollision.left = false;
+  player.body.checkCollision.right = false;
+
+  //Idle animation creation
+  this.anims.create({
+    key: 'idle',
+    frames: this.anims.generateFrameNumbers('red', { start: 4, end: 7 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  //Left
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('red', { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  //Right
+  this.anims.create({
+    key: 'right',
+    frames: this.anims.generateFrameNumbers('red', { start: 8, end: 11 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  //Airborne Right
+  this.anims.create({
+    key: 'jump-right',
+    frames: this.anims.generateFrameNumbers('red', { start: 12, end: 15 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  //Airborne left
+  this.anims.create({
+    key: 'jump-left',
+    frames: this.anims.generateFrameNumbers('red', { start: 16, end: 19 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
 
   //Once player overlaps with object, invoke ender function to end user input and game.
-  this.physics.add.overlap(sprite, endGame, ender, null, this);
-
-  sprite.setCollideWorldBounds(true);
-  sprite.body.checkCollision.up = false;
-  sprite.body.checkCollision.down = true;
-  sprite.body.checkCollision.left = false;
-  sprite.body.checkCollision.right = false;
-  this.physics.add.collider(sprite, tile);
+  this.physics.add.overlap(player, endGame, ender, null, this);
 };
 
 gameScene.update = function(){
   if (gameOver){
-    sprite.setVelocityX(0);
+    player.setVelocityX(0);
     return;
   }
 
   if (cursors.left.isDown){
-    sprite.setVelocityX(-160);
+    player.setVelocityX(-160);
+    if (!player.body.touching.down){
+      player.anims.play('jump-left', true);
+    } else {
+      player.anims.play('left', true);
+    }
 
   } else if (cursors.right.isDown) {
-    sprite.setVelocityX(160);
+    player.setVelocityX(160);
+    if (!player.body.touching.down){
+      player.anims.play('jump-right', true);
+    } else {
+      player.anims.play('right', true);
+    }
 
   } else {
-    sprite.setVelocityX(0);
-
+    player.setVelocityX(0);
+    player.anims.play('idle', true);
   }
 
-  if (cursors.up.isDown && sprite.body.touching.down) {
-    sprite.setVelocityY(-350);
+  if (cursors.up.isDown && player.body.touching.down) {
+    player.setVelocityY(-350);
   }
 };
 
@@ -201,14 +285,14 @@ function ender(){
   gameOver = true;
 
   //Double check that we're hitting this function.
-  sprite.setVelocityY(-500);
-  sprite.body.gravity.y = 0;
-  sprite.setCollideWorldBounds(false);
+  player.setVelocityY(-500);
+  player.body.gravity.y = 0;
+  player.setCollideWorldBounds(false);
   clearTimeout(t);
 
   setTimeout(function(){
     saveScoreToLocalStorage(t);
-    window.location.href = '/scoreboard.html';
+    window.location.href = '/spicy-tower/scoreboard.html';
   }, 1000);
 }
 
@@ -233,7 +317,6 @@ document.addEventListener('keydown', startGame);
 
 function startGame(){
   if(event.which){
-    console.log(event.which);
     timer();
     document.removeEventListener('keydown', startGame);
   }
