@@ -305,20 +305,27 @@ document.addEventListener('keydown', startGame);
 function startGame(){
   if(event.which){
     timer();
-    var playMusic = document.getElementById('music').play();
-
-    // document.getElementById('music').play();
-    if (playMusic !== undefined) {
-      playMusic.then(function() {
-        // Automatic playback started!
-        console.log('playing');
-      }).catch(function(error) {
-        // Automatic playback failed.
-        console.log(error);
-      });
-    }
+    musicPlayer();
     document.removeEventListener('keydown', startGame);
   }
+}
+
+function musicPlayer(){
+  var fileFinder = new XMLHttpRequest();
+  var musicPath = '/spicy-tower/music/spicy-tower.mp3';
+  var deployPath = '/music/spicy-tower.mp3';
+  var playMusic = document.getElementById('music');
+
+  fileFinder.open('HEAD', musicPath, true);
+  fileFinder.send();
+  if (fileFinder.status === 404){
+    playMusic.src = deployPath;
+  } else {
+    playMusic.src = musicPath;
+  }
+  playMusic.play();
+
+
 }
 
 // trigger when player finishes game
