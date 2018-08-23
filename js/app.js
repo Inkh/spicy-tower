@@ -281,8 +281,8 @@ function ender(){
   }, 1000);
 }
 
-var re = document.getElementById('restart');
-re.addEventListener('click', gameScene.replay);
+// var re = document.getElementById('restart');
+// re.addEventListener('click', gameScene.replay);
 
 var h1 = document.getElementsByTagName('h1')[0];
 var seconds = 0;
