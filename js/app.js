@@ -367,7 +367,6 @@ function musicPlayer(){
 function calculateScore(timeInSec) {
   var totalScore = Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
   console.log(totalScore);
-  debugger;
   return totalScore;
   // return timeInSec;
 }
