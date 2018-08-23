@@ -1,5 +1,6 @@
 body {
   background-color: #494949;
+  font-family: 'Bungee Inline', cursive;
  
    
 }
@@ -191,6 +192,7 @@ div {
 .team-container {
   padding-left: 50px;
   padding-right: 50px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 .team-story {
   margin: 10px;
