@@ -31,9 +31,10 @@ const handleSubmit = (e) => {
     modal.classList.add('hide-modal');
   }
   // trigger function to assess if new score is a high score in top 5 userScores
-  console.log (user, lastScore);
-  isHighScore(user, lastScore);
-  displayHighScores();
+  if (user) {
+    isHighScore(user, lastScore);
+    displayHighScores();
+  }
 };
 
 // detect if high score is within top N scores

@@ -141,7 +141,6 @@ h1{
 }
 
 table {
-  
   margin: 0 auto;
 }
 
@@ -150,11 +149,15 @@ table {
   text-align: center;
   width: 100%;
   color: rgb(250, 246, 165);
- 
+  padding-top: 10px;
+  padding-bottom: 50px;
 }
+
 th {
   font-size: 1.5em;
+  text-shadow: 2px 2px rgb(219,	91,	49);
 }
+
 td, th {
   padding: 20px;
 }
