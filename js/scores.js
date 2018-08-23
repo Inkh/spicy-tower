@@ -32,7 +32,9 @@ const handleSubmit = (e) => {
     modal.classList.add('hide-modal');
   }
   // trigger function to assess if new score is a high score in top 5 userScores
+  console.log (user, lastScore);
   isHighScore(5, user, lastScore);
+  displayHighScores();
 };
 
 // detect if high score is within top N scores
@@ -46,16 +48,16 @@ function isHighScore(topN, user, newScore) {
     userScores = [];
   }
 
-  if (userScores.length >= topN) {
-    for (let i = 0; i < topN; i++) {
-      if (userScores[i].score < newScore) {
-        // insert user and newScore into specific index i in native array, while deleting 0 items
-        userScores = userScores.splice(i, 0, { user: user, score: newScore });
-      }
-    }
-  } else {
-    userScores.push({ user: user, score: newScore });
-  }
+  // if (userScores.length >= topN) {
+  //   for (let i = 0; i < topN; i++) {
+  //     if (userScores[i].score < newScore) {
+  //       // insert user and newScore into specific index i in native array, while deleting 0 items
+  //       userScores = userScores.splice(i, 0, { user: user, score: newScore });
+  //     }
+  //   }
+  // } else {
+  //   userScores.push({ user: user, score: newScore });
+  // }
 
   stringifiedAndSorted = JSON.stringify(sortScores(userScores));
   localStorage.setItem('userScores', stringifiedAndSorted);
@@ -97,3 +99,41 @@ function attachEventListeners() {
     shownForm.addEventListener('submit', (e) => handleSubmit(e));
   }
 }
+function displayHighScores () {
+  var userArray = JSON.parse(localStorage.getItem('userScores'));
+  var scoreBoardTable = document.getElementById ('high-scores-board');
+  var thead = document.createElement ('thead');
+  var tr = document.createElement ('tr');
+  var blankth = document.createElement ('th');
+  tr.appendChild(blankth);
+  var nameth = document.createElement ('th');
+  nameth.textContent = 'Name';
+  tr.appendChild(nameth);
+  var scoreth = document.createElement ('th');
+  scoreth.textContent = 'Score';
+  tr.appendChild(scoreth);
+  thead.appendChild(tr);
+
+  var tbody = document.createElement('tbody');
+
+  for (var i=0; i<userArray.length; i++) {
+    tr = document.createElement ('tr');
+    var numbertd = document.createElement ('td');
+    numbertd.textContent= i+1;
+    tr.appendChild(numbertd);
+    var nametd = document.createElement ('td');
+    nametd.textContent = userArray[i].user;
+    tr.appendChild(nametd);
+    var scoretd = document.createElement ('td');
+    scoretd.textContent = userArray[i].score;
+    tr.appendChild(scoretd);
+    tbody.appendChild(tr);
+  }
+
+  scoreBoardTable.appendChild(thead);
+  scoreBoardTable.appendChild(tbody);
+
+
+
+}
+displayHighScores ();
