@@ -193,6 +193,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
+  //Airborne Right
   this.anims.create({
     key: 'jump-right',
     frames: this.anims.generateFrameNumbers('red', { start: 12, end: 15 }),
@@ -200,6 +201,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
+  //Airborne left
   this.anims.create({
     key: 'jump-left',
     frames: this.anims.generateFrameNumbers('red', { start: 16, end: 19 }),
