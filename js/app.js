@@ -303,6 +303,7 @@ document.addEventListener('keydown', startGame);
 function startGame(){
   if(event.which){
     timer();
+    document.getElementById('music').play();
     document.removeEventListener('keydown', startGame);
   }
 }
