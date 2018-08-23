@@ -72,6 +72,7 @@ var numColumns = 8; // This variable specifies the number of horizantal boxes th
 var numRows = 20; // This variable specifies the number of vertical boxes the game creates
 var endGame;
 
+
 // This function generates x & y coordinates and widths for the ground and platforms,
 // constructs them using the Platform constructor, and then stores them in the gamePlatform array
 function generatePlatform(){
@@ -278,7 +279,7 @@ function ender(){
 
   setTimeout(function(){
     saveScoreToLocalStorage(t);
-    window.location.href = '/spicy-tower/scoreboard.html';
+    window.location.href = '/scoreboard.html';
   }, 1000);
 }
 

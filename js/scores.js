@@ -113,6 +113,9 @@ function attachEventListeners() {
 function displayHighScores () {
   var userArray = JSON.parse(localStorage.getItem('userScores'));
   var scoreBoardTable = document.getElementById ('high-scores-board');
+  while (scoreBoardTable.firstChild) {
+    scoreBoardTable.removeChild(scoreBoardTable.firstChild);
+  }
   var thead = document.createElement ('thead');
   var tr = document.createElement ('tr');
   var blankth = document.createElement ('th');
@@ -130,7 +133,7 @@ function displayHighScores () {
   for (var i=0; i<userArray.length; i++) {
     tr = document.createElement ('tr');
     var numbertd = document.createElement ('td');
-    numbertd.textContent= i+1;
+    numbertd.textContent= ' ';
     tr.appendChild(numbertd);
     var nametd = document.createElement ('td');
     nametd.textContent = userArray[i].user;
@@ -143,6 +146,7 @@ function displayHighScores () {
 
   scoreBoardTable.appendChild(thead);
   scoreBoardTable.appendChild(tbody);
+
 
 
 
