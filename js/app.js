@@ -172,7 +172,7 @@ gameScene.create = function() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
-        player = this.physics.add.sprite(20, 450, 'red');
+        player = this.physics.add.sprite(0, 450, 'red');
         //Set gravity to player sprite only
         player.body.gravity.y = 500;
         // sprite.body.setSize(0, 500);
@@ -357,7 +357,10 @@ function musicPlayer(){
 // trigger when player finishes game
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
-  return Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
+  var totalScore = Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
+  console.log(totalScore);
+  debugger;
+  return totalScore;
   // return timeInSec;
 }
 
