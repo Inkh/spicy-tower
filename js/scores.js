@@ -127,3 +127,4 @@ function displayHighScores(topN = null) {
 // runner code
 triggerModal();
 attachEventListeners();
+displayHighScores();
