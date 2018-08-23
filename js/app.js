@@ -22,7 +22,7 @@ let config = {
     default: 'arcade',
     arcade: {
       // gravity: { y: 500}, // include gravity
-      debug: true
+      debug: false
     }
   },
   parent: 'game'
@@ -153,7 +153,7 @@ gameScene.replay = function(){
 gameScene.preload = function() {
   // this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
-  this.load.spritesheet('red', 'assets/red-ss.png', { frameWidth: 50, frameHeight: 50 });
+  this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
 
 };
 
@@ -206,7 +206,7 @@ gameScene.create = function() {
   //Idle animation creation
   this.anims.create({
     key: 'idle',
-    frames: this.anims.generateFrameNumbers('red', { start: 1, end: 4 }),
+    frames: this.anims.generateFrameNumbers('red', { start: 4, end: 7 }),
     frameRate: 10,
     repeat: -1
   });
@@ -214,15 +214,33 @@ gameScene.create = function() {
   //Left
   this.anims.create({
     key: 'left',
-    frames: [ { key: 'red', frame: 0 } ],
-    frameRate: 20,
+    frames: this.anims.generateFrameNumbers('red', { start: 0, end: 3 }),
+    frameRate: 10,
+    repeat: -1
   });
 
   //Right
   this.anims.create({
     key: 'right',
-    frames: [ { key: 'red', frame: 5 } ],
+    frames: this.anims.generateFrameNumbers('red', { start: 8, end: 11 }),
     frameRate: 10,
+    repeat: -1
+  });
+
+  //Airborne Right
+  this.anims.create({
+    key: 'jump-right',
+    frames: this.anims.generateFrameNumbers('red', { start: 12, end: 15 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  //Airborne left
+  this.anims.create({
+    key: 'jump-left',
+    frames: this.anims.generateFrameNumbers('red', { start: 16, end: 19 }),
+    frameRate: 10,
+    repeat: -1
   });
 
 
@@ -239,10 +257,16 @@ gameScene.update = function(){
   if (cursors.left.isDown){
     player.setVelocityX(-160);
     player.anims.play('left', true);
+    if (!player.body.touching.down){
+      player.anims.play('jump-left', true);
+    }
 
   } else if (cursors.right.isDown) {
     player.setVelocityX(160);
     player.anims.play('right', true);
+    if (!player.body.touching.down){
+      player.anims.play('jump-right', true);
+    }
 
   } else {
     player.setVelocityX(0);
