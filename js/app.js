@@ -68,34 +68,22 @@ Platform.prototype.generatePlatform = function(n) {
 // Generate platform objects to repopulate game array with data
 var ground = new Platform(0, 0, 8, 1);
 var spriteIndex = new Platform(2, 2, 1, 2);
-// var one = new Platform(4, 3);
-// var two = new Platform(1, 5);
-// var three = new Platform(4, 7);
-// var four = new Platform(2, 9);
-// var five = new Platform(5, 11);
-// var six = new Platform(3, 13);
-// var seven = new Platform(0, 15);
-// var eight = new Platform(4, 17);
 
 // Make array of game platform objects to iterate over and call prototype method
-var gamePlatforms = [
+var gamePlatforms = [ // This array variable holds all the platforms  
   ground,
   spriteIndex,
-  // one,
-  // two,
-  // three,
-  // four,
-  // five,
-  // six,
-  // seven,
-  // eight
 ];
 
-var numPlatforms = 8;
+var numPlatforms = 7; // This variable specifies the number of platforms the game creates
+var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
+var numRows = 20; // This variable specifies the number of vertical boxes the game creates
 var endGame;
 
-function generatePlatform(){ // Generates platforms; 
-  for (var i = 2; i < numPlatforms+2; i++){
+// This function generates x & y coordinates and widths for the ground and platforms,
+// constructs them using the Platform constructor, and then stores them in the gamePlatform array
+function generatePlatform(){
+  for (var i = 2; i < numPlatforms + 2; i++){
     var y = gamePlatforms[i-1].y + 2;
     var xPrev = gamePlatforms[i-1].x;
     var w = generateRandomXCoord(1, 3);
@@ -161,11 +149,10 @@ gameScene.preload = function() {
 var cursors;
 var tile;
 var gameOver = false;
-var endGame;
 var player;
 
 gameScene.create = function() {
-  const gameMap = refillGameMap(generatePlatform(), 8, 20);
+  const gameMap = refillGameMap(generatePlatform(), numColumns, numRows);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
 
@@ -174,7 +161,7 @@ gameScene.create = function() {
   var endY = gamePlatforms.slice(-1)[0].y;
   console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
-  endGame.create((endX*120), (30), 'tile');
+  endGame.create((endX*120), ((numRows-endY-1)*30), 'tile');
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
