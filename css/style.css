@@ -231,7 +231,35 @@ div {
 #gumi {
   position: relative;
   height: 400px;
-  
 }
 
+.favicon {
+  height: 30px;
+  width: 30px;
+}
 
+.workflow img {
+  border-radius: 0%;
+  width: 80%;
+  /* border: 1px solid #c73c25;
+  padding: 2px; */
+}
+
+.workflow {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.workflow h1 {
+  color: #c73c25;
+  margin-top: 20px;
+}
+
+hr {
+  display: block;
+  height: 0px;
+  border: 0;
+  border-top: 1px solid #c73c25;
+  margin: 1em 0;
+  padding: 0;
+}

@@ -186,6 +186,8 @@ gameScene.create = function() {
   player.body.checkCollision.left = false;
   player.body.checkCollision.right = false;
 
+  var lookingRight = true;
+
   // Idle animation creation
   this.anims.create({
     key: 'idle',
