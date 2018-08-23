@@ -94,7 +94,7 @@ var gamePlatforms = [
 var numPlatforms = 8;
 var endGame;
 
-function generatePlatform(){ // Generates platforms; 
+function generatePlatform(){ // Generates platforms;
   for (var i = 2; i < numPlatforms+2; i++){
     var y = gamePlatforms[i-1].y + 2;
     var xPrev = gamePlatforms[i-1].x;
@@ -291,8 +291,8 @@ function ender(){
   clearTimeout(t);
 
   setTimeout(function(){
-    saveScoreToLocalStorage(t);
-    window.location.href = '/spicy-tower/scoreboard.html';
+    saveScoreToLocalStorage(seconds);
+    window.location.href = 'scoreboard.html';
   }, 1000);
 }
 
@@ -326,11 +326,13 @@ function startGame(){
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
   return Math.floor((100000 - timeInSec) * .2);
+  // return timeInSec;
 }
 
 // why won't this create an array and save to local storage?
-function saveScoreToLocalStorage(t) {
-  let newScore = calculateScore(t);
+function saveScoreToLocalStorage(seconds) {
+  let newScore = calculateScore(seconds);
+
   localStorage.setItem('recentScore', JSON.stringify(newScore));
   localStorage.setItem('gameOver', JSON.stringify(true));
 }

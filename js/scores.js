@@ -44,20 +44,17 @@ function isHighScore(topN, user, newScore) {
 
   if (localStorage.getItem('userScores')) {
     userScores = JSON.parse(localStorage.getItem('userScores'));
+    userScores.push({ user: user, score: newScore });
   } else {
     userScores = [];
   }
 
-  // if (userScores.length >= topN) {
-  //   for (let i = 0; i < topN; i++) {
-  //     if (userScores[i].score < newScore) {
-  //       // insert user and newScore into specific index i in native array, while deleting 0 items
-  //       userScores = userScores.splice(i, 0, { user: user, score: newScore });
-  //     }
-  //   }
-  // } else {
-  //   userScores.push({ user: user, score: newScore });
-  // }
+  for (let i = 0; i < topN; i++) {
+    if (userScores[i].score < newScore) {
+      // insert user and newScore into specific index i in native array, while deleting 0 items
+      userScores = userScores.splice(i, 0, { user: user, score: newScore });
+    }
+  }
 
   stringifiedAndSorted = JSON.stringify(sortScores(userScores));
   localStorage.setItem('userScores', stringifiedAndSorted);
@@ -66,17 +63,6 @@ function isHighScore(topN, user, newScore) {
 // accepts JSON parsed user scores as a paramater
 function sortScores(userScores) {
   return userScores.sort((a, b) => b.score - a.score);
-}
-
-// can change to Top X later
-function displayScores() {
-  // grab and parse JSON user scores string back to JS
-  let parsed = JSON.parse(localStorage.getItem('userScores'));
-  // sort and display all scores in local storage
-  const sorted = sortScores(parsed);
-
-  // create HTML element
-  const newEl = document.createElement('div');
 }
 
 function createEl(type, content = null, klass = null) {
@@ -97,8 +83,6 @@ function attachEventListeners() {
   if (shownForm) {
     shownForm.addEventListener('submit', (e) => handleSubmit(e));
   }
-
-
 
   document.body.addEventListener('keyup', (e) => {
     let pressed = e.keyCode;
@@ -143,8 +127,5 @@ function displayHighScores () {
 
   scoreBoardTable.appendChild(thead);
   scoreBoardTable.appendChild(tbody);
-
-
-
 }
 displayHighScores ();
