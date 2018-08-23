@@ -65,14 +65,6 @@ function sortScores(userScores) {
   return userScores.sort((a, b) => b.score - a.score);
 }
 
-function createEl(type, content = null, klass = null) {
-  let el = document.createElement(type);
-  if (content) { el.textContent = content; }
-  if (klass) { el.class = klass; }
-
-  return el;
-}
-
 // runner code
 triggerModal();
 attachEventListeners();
@@ -97,6 +89,9 @@ function attachEventListeners() {
 function displayHighScores(topN = null) {
   var userArray = JSON.parse(localStorage.getItem('userScores'));
   var scoreBoardTable = document.getElementById ('high-scores-board');
+  while (scoreBoardTable.firstChild) {
+    scoreBoardTable.removeChild(scoreBoardTable.firstChild);
+  }
   var thead = document.createElement ('thead');
   var tr = document.createElement ('tr');
   var blankth = document.createElement ('th');
@@ -118,7 +113,7 @@ function displayHighScores(topN = null) {
     for (var i=0; i < length; i++) {
       tr = document.createElement ('tr');
       var numbertd = document.createElement ('td');
-      numbertd.textContent= i+1;
+      numbertd.textContent= ' ';
       tr.appendChild(numbertd);
       var nametd = document.createElement ('td');
       nametd.textContent = userArray[i].user;
