@@ -21,20 +21,11 @@ let config = {
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
   width: 800, // game width
   height: 600, // game height
-
   backgroundColor: '#D3D3D3', // game background
   scene: gameScene,
-  // scene: {
-  //   // key: 'game',
-  //   preload: preload,
-  //   create: create,
-  //   update: update,
-  //   // gameOver: this.scene.restart()
-  // }, // our newly created scene
   physics: {
     default: 'arcade',
     arcade: {
-      // gravity: { y: 500}, // include gravity
       debug: false
     }
   },
@@ -142,7 +133,6 @@ gameScene.replay = function(){
 };
 
 gameScene.preload = function() {
-  // this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
 
@@ -153,7 +143,7 @@ gameScene.create = function() {
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
 
-  //Endgame object creation. Place on page is temporary.
+  // Endgame object creation. Place on page is temporary.
   var endX = gamePlatforms.slice(-1)[0].x;
   var endY = gamePlatforms.slice(-1)[0].y;
   console.log(endX, endY);
@@ -181,14 +171,14 @@ gameScene.create = function() {
     }
   }
 
-  //Create main character sprite, and have collision
+  // Create main character sprite, and have collision
   this.physics.add.collider(player, tile);
   player.body.checkCollision.up = false;
   player.body.checkCollision.down = true;
   player.body.checkCollision.left = false;
   player.body.checkCollision.right = false;
 
-  //Idle animation creation
+  // Idle animation creation
   this.anims.create({
     key: 'idle',
     frames: this.anims.generateFrameNumbers('red', { start: 4, end: 7 }),
@@ -196,7 +186,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
-  //Left
+  // Left
   this.anims.create({
     key: 'left',
     frames: this.anims.generateFrameNumbers('red', { start: 0, end: 3 }),
@@ -204,7 +194,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
-  //Right
+  // Right
   this.anims.create({
     key: 'right',
     frames: this.anims.generateFrameNumbers('red', { start: 8, end: 11 }),
@@ -212,7 +202,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
-  //Airborne Right
+  // Airborne Right
   this.anims.create({
     key: 'jump-right',
     frames: this.anims.generateFrameNumbers('red', { start: 12, end: 15 }),
@@ -220,7 +210,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
-  //Airborne left
+  // Airborne left
   this.anims.create({
     key: 'jump-left',
     frames: this.anims.generateFrameNumbers('red', { start: 16, end: 19 }),
@@ -229,7 +219,7 @@ gameScene.create = function() {
   });
 
 
-  //Once player overlaps with object, invoke ender function to end user input and game.
+  // Once player overlaps with object, invoke ender function to end user input and game.
   this.physics.add.overlap(player, endGame, ender, null, this);
 };
 
@@ -265,11 +255,11 @@ gameScene.update = function(){
   }
 };
 
-//Function that gets called when player sprite collides with  endGame object.
+// Function that gets called when player sprite collides with  endGame object.
 function ender(){
   gameOver = true;
 
-  //Double check that we're hitting this function.
+  // Double check that we're hitting this function.
   player.setVelocityY(-500);
   player.body.gravity.y = 0;
   player.setCollideWorldBounds(false);
@@ -311,11 +301,12 @@ function startGame(){
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
   return Math.floor((100000 - timeInSec) * .2);
+  // return timeInSec;
 }
 
-// why won't this create an array and save to local storage?
-function saveScoreToLocalStorage(t) {
-  let newScore = calculateScore(t);
+function saveScoreToLocalStorage(seconds) {
+  let newScore = calculateScore(seconds);
+
   localStorage.setItem('recentScore', JSON.stringify(newScore));
   localStorage.setItem('gameOver', JSON.stringify(true));
 }
