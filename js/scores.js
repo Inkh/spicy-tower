@@ -1,6 +1,7 @@
 'use-strict';
 
-console.log('the js is linked');
+// variable to display n number of top scores if we so choose to
+var topN = 4;
 
 function triggerModal() {
   let modal = document.querySelector('.hide-modal');
@@ -33,7 +34,7 @@ const handleSubmit = (e) => {
   // trigger function to assess if new score is a high score in top 5 userScores
   if (user) {
     isHighScore(user, lastScore);
-    displayHighScores();
+    displayHighScores(topN);
   }
 };
 
@@ -103,10 +104,11 @@ function displayHighScores(topN = null) {
   var tbody = document.createElement('tbody');
 
   if (userArray) {
-    var length;
-    topN ? length = userArray.splice(0, topN + 1) : length = userArray.length;
+    if (topN) {
+      userArray = userArray.splice(0, topN);
+    }
 
-    for (var i=0; i < length; i++) {
+    for (var i=0; i < userArray.length; i++) {
       tr = document.createElement ('tr');
       var numbertd = document.createElement ('td');
       numbertd.textContent= ' ';
@@ -128,4 +130,4 @@ function displayHighScores(topN = null) {
 // runner code
 triggerModal();
 attachEventListeners();
-displayHighScores();
+displayHighScores(topN);
