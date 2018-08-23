@@ -135,7 +135,7 @@ gameScene.replay = function(){
 gameScene.preload = function() {
   this.load.image('tile', 'assets/15-01.png');
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
-
+  this.load.spritesheet('lava', 'assets/lava-fall.png', { frameWidth: 50, frameHeight: 50 });
 };
 
 gameScene.create = function() {
@@ -148,7 +148,8 @@ gameScene.create = function() {
   var endY = gamePlatforms.slice(-1)[0].y;
   console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
-  endGame.create((endX*120), ((numRows-endY-1)*30), 'tile');
+  // endGame.create((endX*120), ((numRows-endY-1)*30), 'lava');
+  endGame = this.physics.add.sprite((endX*120), ((numRows-endY-1)*30), 'lava');
 
   for (var i = 0; i < gameMap.length; i++) {
     for (var j = 0; j < gameMap[i].length; j++) {
@@ -170,6 +171,13 @@ gameScene.create = function() {
       }
     }
   }
+  //Lava sprite sheet animation
+  this.anims.create({
+    key: 'pour',
+    frames: this.anims.generateFrameNumbers('lava', { start: 0, end: 2 }),
+    frameRate: 10,
+    repeat: -1
+  });
 
   // Create main character sprite, and have collision
   this.physics.add.collider(player, tile);
@@ -224,6 +232,8 @@ gameScene.create = function() {
 };
 
 gameScene.update = function(){
+  endGame.anims.play('pour', true);
+
   if (gameOver){
     player.setVelocityX(0);
     return;
