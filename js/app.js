@@ -22,7 +22,7 @@ let config = {
     default: 'arcade',
     arcade: {
       // gravity: { y: 500}, // include gravity
-      debug: true
+      debug: false
     }
   },
   parent: 'game'
@@ -122,7 +122,7 @@ gameScene.replay = function(){
 gameScene.preload = function() {
   // this.load.image('sprite', 'assets/dead.png', { frameWidth: 32, frameHeight: 48 });
   this.load.image('tile', 'assets/15-01.png');
-  this.load.spritesheet('red', 'assets/red-player.png', { frameWidth: 50, frameHeight: 50 });
+  this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
 
 };
 
@@ -193,6 +193,20 @@ gameScene.create = function() {
     repeat: -1
   });
 
+  this.anims.create({
+    key: 'jump-right',
+    frames: this.anims.generateFrameNumbers('red', { start: 12, end: 15 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  this.anims.create({
+    key: 'jump-left',
+    frames: this.anims.generateFrameNumbers('red', { start: 16, end: 19 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
 
   //Once player overlaps with object, invoke ender function to end user input and game.
   this.physics.add.overlap(player, endGame, ender, null, this);
@@ -207,10 +221,16 @@ gameScene.update = function(){
   if (cursors.left.isDown){
     player.setVelocityX(-160);
     player.anims.play('left', true);
+    if (!player.body.touching.down){
+      player.anims.play('jump-left', true);
+    }
 
   } else if (cursors.right.isDown) {
     player.setVelocityX(160);
     player.anims.play('right', true);
+    if (!player.body.touching.down){
+      player.anims.play('jump-right', true);
+    }
 
   } else {
     player.setVelocityX(0);
