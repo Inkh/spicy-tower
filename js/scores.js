@@ -38,9 +38,7 @@ const handleSubmit = (e) => {
 
 // detect if high score is within top N scores
 function isHighScore(user, newScore) {
-  // debugger;
   let userScores;
-  // let displayTopScores;
   let stringifiedAndSorted;
 
   // only trigger this logic if the user chose to input their name
@@ -65,9 +63,6 @@ function sortScores(userScores) {
   return userScores.sort((a, b) => b.score - a.score);
 }
 
-// runner code
-triggerModal();
-attachEventListeners();
 
 function attachEventListeners() {
   const shownForm = document.querySelector('form');
@@ -128,4 +123,7 @@ function displayHighScores(topN = null) {
     scoreBoardTable.appendChild(tbody);
   }
 }
-displayHighScores();
+
+// runner code
+triggerModal();
+attachEventListeners();
