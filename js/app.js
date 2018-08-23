@@ -177,7 +177,7 @@ gameScene.create = function() {
         tile.displayWidth = 120;
         tile.displayHeight = 20;
       } else if (gameMap[i][j] === 2) {
-        player = this.physics.add.sprite(100, 450, 'red');
+        player = this.physics.add.sprite(0, 450, 'red');
         //Set gravity to player sprite only
         player.body.gravity.y = 500;
         player.body.setSize(25, 50);
@@ -291,8 +291,8 @@ function collectCoin(coin){
   coin.setVelocityY(-500);
   coin.body.gravity.y = 0;
   coin.setCollideWorldBounds(false);
-  // coins.disableBody(true, true);
-  coinPointTotal += 100;
+  coin.disableBody(false, true);
+  coinPointTotal += 300;
   console.log(coinPointTotal);
 }
 
@@ -365,7 +365,9 @@ function musicPlayer(){
 // trigger when player finishes game
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
-  return Math.floor((10000 - timeInSec) * .2);
+  var totalScore = Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
+  console.log(totalScore);
+  return totalScore;
   // return timeInSec;
 }
 
