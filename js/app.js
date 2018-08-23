@@ -3,6 +3,19 @@ console.log('link');
 // create a new scene named "Game"
 var gameScene = new Phaser.Scene('Game');
 
+// Global varibles for platforms
+var gamePlatforms = []; // This array variable holds all the platforms
+var numPlatforms = 7; // This variable specifies the number of platforms the game creates
+var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
+var numRows = 20; // This variable specifies the number of vertical boxes the game creates
+var endGame;
+
+//Global variable for key input
+var cursors;
+var tile;
+var gameOver = false;
+var player;
+
 // our game's configuration
 let config = {
   type: Phaser.AUTO, //Phaser will decide how to render our game (WebGL or Canvas)
@@ -56,22 +69,13 @@ Platform.prototype.generatePlatform = function(n) {
   return mappedObject;
 };
 
-// Make array of game platform objects to iterate over and call prototype method
-var gamePlatforms = []; // This array variable holds all the platforms
-var numPlatforms = 7; // This variable specifies the number of platforms the game creates
-var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
-var numRows = 20; // This variable specifies the number of vertical boxes the game creates
-var endGame;
-
-
 // This function generates x & y coordinates and widths for the ground and platforms,
 // constructs them using the Platform constructor, and then stores them in the gamePlatform array
 function generatePlatform(){
-  var ground = new Platform(0, 0, numColumns, 1);
-  var spriteIndex = new Platform(2, 2, 1, 2);
+  var ground = new Platform(0, 0, numColumns, 1); // generates the ground floor and has it span the full length of game canvas
+  var spriteIndex = new Platform(2, 2, 1, 2); // generates the jumper character
 
-  gamePlatforms.push(ground);
-  gamePlatforms.push(spriteIndex);
+  gamePlatforms.push(ground, spriteIndex); // ensures that the ground floor and jumper are always first two elements in the array
 
   for (var i = 2; i < numPlatforms + 2; i++){
     var y = gamePlatforms[i-1].y + 2;
@@ -79,7 +83,7 @@ function generatePlatform(){
     var w = generateRandomXCoord(1, 3);
     var x = generateRandomXCoord(0, 7, xPrev, w);
 
-    gamePlatforms[i] = new Platform(x,y,w);
+    gamePlatforms[i] = new Platform(x, y, w);
   }
 
   return gamePlatforms;
@@ -133,12 +137,6 @@ gameScene.preload = function() {
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
 
 };
-
-// Global variable for key input
-var cursors;
-var tile;
-var gameOver = false;
-var player;
 
 gameScene.create = function() {
   const gameMap = refillGameMap(generatePlatform(), numColumns, numRows);
