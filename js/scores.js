@@ -77,7 +77,7 @@ function attachEventListeners() {
     let pressed = e.keyCode;
     if (pressed === 27) {
       localStorage.setItem('gameOver', 'false');
-      window.location.href = '/scoreboard.html';
+      window.location.href = '/spicy-tower/scoreboard.html';
     }
   });
 }

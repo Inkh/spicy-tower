@@ -313,3 +313,8 @@ canvas {
   display: none;
   margin: 0 auto;
 }
+
+.workflow h1 {
+  margin-top: 10px;
+  margin-bottom: 70px;
+}
