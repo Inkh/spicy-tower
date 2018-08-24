@@ -29,7 +29,7 @@ let config = {
   physics: {
     default: 'arcade',
     arcade: {
-      debug: true
+      debug: false
     }
   },
   parent: 'game'
@@ -136,7 +136,8 @@ gameScene.replay = function(){
 };
 
 gameScene.preload = function() {
-  this.load.image('tile', 'assets/platform.png');
+  this.load.image('bg', 'assets/bg-lav.png');
+  this.load.image('tile', 'assets/lava-plat.png');
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
   this.load.image('coin', 'assets/coin2.png'); //{ frameWidth: 50, frameHeight: 50 });
   this.load.spritesheet('lava', 'assets/lava-fall.png', { frameWidth: 50, frameHeight: 50 });
@@ -146,7 +147,7 @@ gameScene.create = function() {
   const gameMap = refillGameMap(generatePlatform(), numColumns, numRows);
   tile = this.physics.add.staticGroup();
   cursors = this.input.keyboard.createCursorKeys();
-
+  this.add.image(400,300, 'bg');
   // Endgame object creation. Place on page is temporary.
   var endX = gamePlatforms.slice(-1)[0].x;
   var endY = gamePlatforms.slice(-1)[0].y;
