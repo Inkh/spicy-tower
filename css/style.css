@@ -1,8 +1,18 @@
 body {
   background-color: #494949;
   font-family: 'Bungee Inline', cursive;
- 
-   
+}
+
+.spicycontainer {
+  
+  text-align: center;
+  display: block;
+  background-image: url('../assets/red-sprites.png');
+  background-position: center;
+}
+  
+.spicytower {
+  background-color: #494949;
 }
 
 nav {
@@ -17,7 +27,7 @@ nav .nav-accent {
   height: 5px;
   width: 100%;
   position: relative;
-  top: 75px;
+  top: 10px;
   background-color: #dd5b27;
 }
 
@@ -25,7 +35,7 @@ nav .nav-links {
   width: 100%;
   position: relative;
   height: 30px;
-  top: 75px;
+  top: 10px;
   background-color: #929292;
 }
 
@@ -203,7 +213,7 @@ h3 {
   
 }
 
-img {
+.about {
   width: 200px;
   border-radius: 50%;
   margin: 50px;
