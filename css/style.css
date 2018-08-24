@@ -324,12 +324,22 @@ canvas {
 }
 
 .special-img {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
 }
 
 footer {
   width: 100%;
   background-color: #1b1b1b;
   height: 80px;
+}
+
+.div-img {
+  background-image: url('../assets/piotr.jpg');
+  border-radius: 50%;
+  height: 300px;
+  width: 300px;
+  background-size: cover;
+  background-position: center;
+  margin: 20px;
 }
