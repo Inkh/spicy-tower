@@ -1,4 +1,18 @@
 # Spicy Tower
+> Team Members
+
+* Brian Nelson
+* Rebecca Hong
+* Jeffrey Weng
+* Suzanne Su
+
+> Description of Project 
+* Spicy Tower 1.0.0 is a jumping platform game. 
+* Framework/libraries - Phaser 3.11
+* Special thanks to Piotr Hamond for music
+
+> Problem domain
+* Our goal is to implement a jumping platform game that would bring back a sense of of nastalgia. We were inspired by icy tower and other examples online. In order to tackle some of the challenges with game physics we utilized phaser 3.11. Although, we initially struggled finding documentation, with a lot of research and experimentatoin we were able to complete our Spicy Tower version 1.0.0.
 
 > User Stories
 
