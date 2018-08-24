@@ -1,3 +1,5 @@
+'use-strict';
+
 console.log('link');
 
 // Global varible for game setup, Part I
