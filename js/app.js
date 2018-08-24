@@ -142,7 +142,7 @@ gameScene.replay = function(){
 
 gameScene.preload = function() {
   this.load.image('bg', 'assets/bg-f.gif');
-  this.load.image('tile', 'assets/lava-plat.png');
+  this.load.image('tile', 'assets/lava-v3.png');
   this.load.spritesheet('red', 'assets/red-sprites.png', { frameWidth: 50, frameHeight: 50 });
   this.load.image('coin', 'assets/coin2.png'); //{ frameWidth: 50, frameHeight: 50 });
   this.load.spritesheet('lava', 'assets/lava-fall.png', { frameWidth: 50, frameHeight: 50 });
