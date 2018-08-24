@@ -4,7 +4,7 @@
 var topN;
 
 function triggerModal() {
-  let modal = document.querySelector('.hide-modal');
+  let modal = document.querySelector('.hide-modal') || document.querySelector('.show-modal');
 
   if (localStorage.getItem('gameOver') === 'true') {
     // set modal display to visible
@@ -26,11 +26,7 @@ const handleSubmit = (e) => {
   const lastScore = JSON.parse(localStorage.getItem('recentScore'));
   // reset game over in local storage to prevent showing modal on page by default
   localStorage.setItem('gameOver', JSON.stringify(false));
-  if (localStorage.getItem('gameOver') === 'false') {
-    let modal = document.querySelector('.show-modal');
-    modal.classList.remove('show-modal');
-    modal.classList.add('hide-modal');
-  }
+  triggerModal();
   // trigger function to assess if new score is a high score in top 5 userScores
   if (user) {
     isHighScore(user, lastScore);

@@ -302,7 +302,7 @@ function ender(){
 
   setTimeout(function(){
     saveScoreToLocalStorage(t);
-    window.location.href = '/spicy-tower/scoreboard.html';
+    window.location.href = 'scoreboard.html';
   }, 1000);
 }
 
