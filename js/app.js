@@ -1,22 +1,28 @@
 console.log('link');
 
-// create a new scene named "Game"
-var gameScene = new Phaser.Scene('Game');
+// Global varible for game setup, Part I
+var gameScene = new Phaser.Scene('Game'); // create a new scene named "Game"
 
-// Global varibles for platforms
+// Global varibles for platforms & coins
 var gamePlatforms = []; // This array variable holds all the platforms
 var numPlatforms = 7; // This variable specifies the number of platforms the game creates
 var numColumns = 8; // This variable specifies the number of horizantal boxes the game creates
 var numRows = 20; // This variable specifies the number of vertical boxes the game creates
-var endGame;
-var coins = [];
-var coinPointTotal = 0;
-
-// Global variable for key input
-var cursors;
 var tile;
+var coins = [];
+
+// Global variables for key input
+var cursors;
+var endGame;
 var gameOver = false;
 var player;
+
+//Global variables for time & score
+var totalScore = 0;
+var coinPointTotal = 0;
+var h1 = document.querySelector('#time');
+var seconds = 0;
+var t;
 
 // our game's configuration
 let config = {
@@ -34,11 +40,9 @@ let config = {
   parent: 'game'
 };
 
-// create the game, and pass it the configuration
-var game = new Phaser.Game(config);
-
-// Blank canvas to populate with sub arrays
-var gameMap = [];
+// Global varibles for game setup, Part II
+var game = new Phaser.Game(config); // create the game, and pass it the configuration
+var gameMap = []; // Blank canvas to populate with sub arrays
 
 // dynamically generate 2D array with subarrays of 0's
 function populateGameMap(col, row) {
@@ -91,6 +95,7 @@ function generatePlatform(){
   return gamePlatforms;
 }
 
+// This function randomly generates x coordinates & widths and ensures that platform are spaced properly
 function generateRandomXCoord(xMin, xMax, xPrev, platWidth){
   do{
     var min = Math.ceil(xMin);
@@ -103,6 +108,7 @@ function generateRandomXCoord(xMin, xMax, xPrev, platWidth){
     } else{
       maxSpace = 3;
     }
+
   }while((xNew === xPrev) || (Math.abs(xNew-xPrev) > maxSpace));
 
   return xNew;
@@ -156,7 +162,6 @@ gameScene.create = function() {
   endGame.displayHeight = 150;
   endGame.displayOriginY = 40;
   endGame.body.setSize(30,35, false);
-
 
   for (var k = 3; k < numPlatforms + 2; k++){
     var coinX = gamePlatforms.slice(k-1)[0].x;
@@ -238,7 +243,7 @@ gameScene.create = function() {
     repeat: -1
   });
 
-  // Once player overlaps with object, invoke ender function to end user input and game.
+  // Once player overlaps with object, invokes either the collectCoin or ender functions
   var me = this;
   coins.forEach(function(coin){
     me.physics.add.overlap(player, coin, function(){collectCoin(coin);}, null, me);
@@ -283,8 +288,6 @@ gameScene.update = function(){
 
 function collectCoin(coin){
   coin.setCollideWorldBounds(true);
-  coin.setVelocityY(-500);
-  coin.body.gravity.y = 0;
   coin.disableBody(false, true);
   coinPointTotal += 300;
   console.log(coinPointTotal);
@@ -305,10 +308,6 @@ function ender(){
     window.location.href = '/spicy-tower/scoreboard.html';
   }, 1000);
 }
-
-var h1 = document.querySelector('#time');
-var seconds = 0;
-var t;
 
 function addTime(){
   seconds++;
@@ -349,14 +348,12 @@ function musicPlayer(){
     playMusic.src = musicPath;
   }
   playMusic.play();
-
-
 }
 
 // trigger when player finishes game
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
-  var totalScore = Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
+  totalScore = Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
   return totalScore;
 }
 
