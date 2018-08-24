@@ -10,10 +10,9 @@ var numColumns = 8; // This variable specifies the number of horizantal boxes th
 var numRows = 20; // This variable specifies the number of vertical boxes the game creates
 var endGame;
 var coins = [];
-// var coins;
 var coinPointTotal = 0;
 
-//Global variable for key input
+// Global variable for key input
 var cursors;
 var tile;
 var gameOver = false;
@@ -152,7 +151,6 @@ gameScene.create = function() {
   var endY = gamePlatforms.slice(-1)[0].y;
   console.log(endX, endY);
   endGame = this.physics.add.staticGroup();
-  // endGame.create((endX*120), ((numRows-endY-1)*30), 'lava');
   endGame = this.physics.add.sprite((endX*120), ((numRows-endY-1)*30), 'lava');
   endGame.displayWidth = 50;
   endGame.displayHeight = 150;
@@ -164,7 +162,6 @@ gameScene.create = function() {
     var coinX = gamePlatforms.slice(k-1)[0].x;
     var coinY = gamePlatforms.slice(k-1)[0].y;
     coins[k]= this.physics.add.sprite(((coinX*120)-15), ((numRows-coinY-1)*30), 'coin');
-    // coins[k].body.gravity.y = 500;
   }
 
   for (var i = 0; i < gameMap.length; i++) {
@@ -181,12 +178,11 @@ gameScene.create = function() {
         //Set gravity to player sprite only
         player.body.gravity.y = 500;
         player.body.setSize(25, 50);
-        // sprite.displayWidth = 30;
-        // sprite.displayHeight = 40;
         player.setCollideWorldBounds(true);
       }
     }
   }
+
   //Lava sprite sheet animation
   this.anims.create({
     key: 'pour',
@@ -242,13 +238,11 @@ gameScene.create = function() {
     repeat: -1
   });
 
-
   // Once player overlaps with object, invoke ender function to end user input and game.
   var me = this;
   coins.forEach(function(coin, index){
     me.physics.add.overlap(player, coin, function(){collectCoin(coin);}, null, me);
   });
- 
 
   this.physics.add.overlap(player, endGame, ender, null, this);
 };
@@ -312,9 +306,6 @@ function ender(){
   }, 1000);
 }
 
-// var re = document.getElementById('restart');
-// re.addEventListener('click', gameScene.replay);
-
 var h1 = document.querySelector('#time');
 var seconds = 0;
 var t;
@@ -332,7 +323,7 @@ function timer(){
 document.addEventListener('keydown', startGame);
 
 function startGame(){
-  // change canvas to visible & .game-instructions div to hidden
+  // change canvas to visible & .game-instructions div to display none
   document.getElementsByTagName('canvas')[0].style.display = 'block';
   document.querySelector('.game-instructions').style.display = 'none';
   document.querySelector('#time').style.display = 'block';
@@ -366,9 +357,7 @@ function musicPlayer(){
 // calculate high score by a multiplier
 function calculateScore(timeInSec) {
   var totalScore = Math.floor(((10000 - timeInSec) * .2) + coinPointTotal);
-  console.log(totalScore);
   return totalScore;
-  // return timeInSec;
 }
 
 function saveScoreToLocalStorage(seconds) {

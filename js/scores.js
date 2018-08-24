@@ -1,7 +1,7 @@
 'use-strict';
 
 // variable to display n number of top scores if we so choose to
-var topN = 4;
+var topN;
 
 function triggerModal() {
   let modal = document.querySelector('.hide-modal');
