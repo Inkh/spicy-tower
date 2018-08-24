@@ -239,11 +239,13 @@ div {
   width: 120px;
   top: 140px;
   right: -30px;
+  border-radius: 50%;
 }
 
 #gumi {
   position: relative;
   height: 400px;
+
 }
 
 .favicon {
