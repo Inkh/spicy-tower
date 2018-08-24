@@ -240,7 +240,7 @@ gameScene.create = function() {
 
   // Once player overlaps with object, invoke ender function to end user input and game.
   var me = this;
-  coins.forEach(function(coin, index){
+  coins.forEach(function(coin){
     me.physics.add.overlap(player, coin, function(){collectCoin(coin);}, null, me);
   });
 
@@ -282,9 +282,9 @@ gameScene.update = function(){
 };
 
 function collectCoin(coin){
+  coin.setCollideWorldBounds(true);
   coin.setVelocityY(-500);
   coin.body.gravity.y = 0;
-  coin.setCollideWorldBounds(false);
   coin.disableBody(false, true);
   coinPointTotal += 300;
   console.log(coinPointTotal);
